@@ -1,13 +1,11 @@
-import {RouterProvider, router} from './login/RouterProvider';
-// import Test from './test/Test';
-import './App.css';
+import AssignmentOnline from "./assignment";
 
 function App() {
-  return (
-    <div className="App">
-      <RouterProvider router={router} />
-    </div>
-  );
+  	return (
+		<div className="App">
+			<AssignmentOnline />
+    	</div>
+  	);
 }
 
 export default App;
