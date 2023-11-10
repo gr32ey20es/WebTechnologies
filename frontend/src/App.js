@@ -1,4 +1,4 @@
-import AssignmentOnline from "./assignment";
+import { AssignmentOnline } from "./assignment";
 
 function App() {
   	return (

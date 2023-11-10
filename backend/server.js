@@ -5,9 +5,13 @@ import express from 'express';
 import cors from 'cors';
 const app = express();
 app.use(cors());
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 
 import { getAssignment } from './assignment/get.js';
+import { postAssignment } from './assignment/post.js';
 getAssignment(app)
+postAssignment(app)
 
 // const pool = new Pool({
 // 	user: 'kim',

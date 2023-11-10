@@ -1,8 +1,9 @@
-import { SET_ASSESSMENT_STARTED, SET_ASSESSMENT_FINISHED, SET_ASSESSMENT_DATA } from './constants';
+import { SET_ASSESSMENT_STARTED, SET_ASSESSMENT_FINISHED, SET_ASSESSMENT_DATA, SET_USER_DATA, SET_USER_CURRENT_BOX } from './constants';
 
 export const initState = {
     isAssignmentStarted: false,
-    isAssignmentFinished: false 
+    isAssignmentFinished: false,
+    userCurrentBox: 0
 }
 
 const reducer = (state, action) => {
@@ -28,6 +29,18 @@ const reducer = (state, action) => {
             newState = {
                 ...state,
                 "data": action.payload
+            }
+            break;
+        case SET_USER_DATA:
+            newState = {
+                ...state,
+                'userData': action.payload
+            }
+            break;
+        case SET_USER_CURRENT_BOX:
+            newState = {
+                ...state,
+                'userCurrentBox': action.payload
             }
             break;
         default:

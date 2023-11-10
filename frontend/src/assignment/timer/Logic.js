@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react"
 import { useAssessment } from "../assessment"
 import { setAssessmentFinished } from '../assessment/actions'
+import UI from './UI'
 
-function Timer({ setIsFinished }) {
-    console.log("Timer re-render...")
-
+function Logic () {
     const [state, dispatch] = useAssessment()
     const initTimer = state.data.timeLimit
-
     const [timer, setTimer] = useState(initTimer)
 
     useEffect(() => {
@@ -21,14 +19,14 @@ function Timer({ setIsFinished }) {
     
     useEffect(() => {
         const timerId = setInterval(
-            () => setTimer(prev => prev > 0 ? prev - 1 : prev)
+            () => setTimer(prev => prev - (prev > 0))
             , 1000
         );
         
         return () => clearInterval(timerId);
     }, [])
 
-    return(<p>{timer}</p>)
+    return <UI time={timer} />
 }
 
-export default Timer
+export default Logic

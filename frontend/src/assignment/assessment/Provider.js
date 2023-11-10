@@ -5,8 +5,6 @@ import { setAssessmentData, setAssessmentStarted } from './actions'
 import Context from './Context'
 
 function Provider({ children }) {
-    console.log('Provider re-render...')
-
     const [state, dispatch] = useReducer(reducer, initState)
 
     useEffect(() => {
