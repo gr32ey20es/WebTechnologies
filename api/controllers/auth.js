@@ -20,32 +20,24 @@ export const register = (req, res) => {
 };
 
 export const login = (req, res) => {
-  console.log(req.body.username);
-
   const selectQuery = "SELECT * FROM users WHERE UserName = ?";
-
   db.query(selectQuery, [req.body.username], (err, data) => {
     if (err) {
       return res.status(500).json(err);
     }
-
     if (data.length === 0) {
       return res.status(404).json("User not found!");
     }
-
     const user = data[0];
     // Check password
     if (req.body.password !== user.Password) {
       return res.status(400).json("Wrong username or password!");
     }
-
     const token = jwt.sign({ id: user.RoleId }, "jwtkey");
     const { Password, ...userData } = user; // Use destructuring to exclude the "Password" property
-
     res.cookie("access_token", token, {
       httpOnly: true,
     });
-
     res.status(200).json(userData);
   });
 };
