@@ -21,7 +21,7 @@ export const AuthContexProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    await axios.post("/auth/logout");
+    await axios.post("http://localhost:8800/api/auth/logout");
     setCurrentUser(null);
     localStorage.removeItem("expirationTime");
     localStorage.removeItem("user"); // Xóa thông tin người dùng từ localStorage

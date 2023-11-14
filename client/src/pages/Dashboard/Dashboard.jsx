@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
-
+import UserForm from "./UserForm.jsx";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -17,6 +17,13 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import { visuallyHidden } from "@mui/utils";
+import { styled, alpha } from "@mui/material/styles";
+import Menu from "@mui/material/Menu";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 function createData(UserId, UserName, Email, Password, Role) {
   return {
@@ -172,37 +179,113 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
+const StyledMenu = styled((props) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "right",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "right",
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  "& .MuiPaper-root": {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 180,
+    color:
+      theme.palette.mode === "light"
+        ? "rgb(55, 65, 81)"
+        : theme.palette.grey[300],
+    boxShadow:
+      "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+    "& .MuiMenu-list": {
+      padding: "4px 0",
+    },
+    "& .MuiMenuItem-root": {
+      "& .MuiSvgIcon-root": {
+        fontSize: 18,
+        color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5),
+      },
+      "&:active": {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity
+        ),
+      },
+    },
+  },
+}));
+
 export default function Dashboard() {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
+  const [selectedUserId, setSelectedUserId] = React.useState("");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [users, setUsers] = useState([]);
   const [rows, setRows] = useState([]);
+  const [openForm, setOpenForm] = useState(false);
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const onShowForm = () => {
+    setOpenForm(true);
+  };
+  const onCloseForm = () => {
+    setOpenForm(false);
+  };
+
+  const handleClickMenu = (event, userId) => {
+    setSelectedUserId(userId)
+    console.log(selectedUserId)
+    event.preventDefault();
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get("http://localhost:8800/api/users");
+      const users = response.data;
+      const newRows = users.map((user) => {
+        return createData(
+          user.UserId,
+          user.UserName,
+          user.Email,
+          user.Password,
+          user.Role
+        );
+      });
+      setRows(newRows);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get("http://localhost:8800/api/users");
-        const users = response.data;
-        const newRows = users.map((user) => {
-          return createData(
-            user.UserId,
-            user.UserName,
-            user.Email,
-            user.Password,
-            user.Role
-          );
-        });
-        setRows(newRows);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     fetchUsers();
   }, []);
+  const deleteUser = async (userId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8800/api/users/${userId}`
+      );
+      console.log(response.data);
+      fetchUsers();
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -259,79 +342,120 @@ export default function Dashboard() {
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage,rows]
+    [order, orderBy, page, rowsPerPage, rows]
   );
   return (
-    <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.UserId);
-                const labelId = `enhanced-table-checkbox-${index}`;
+    <div>
+      {openForm && <UserForm onOpen={openForm} data = {fetchUsers}   isClose={onCloseForm}  userId={selectedUserId}  ></UserForm>}
 
-                return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row.UserId)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.UserId}
-                    selected={isItemSelected}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
+      <Box sx={{ width: "100%" }}>
+        <Paper sx={{ width: "100%", mb: 2 }}>
+          <EnhancedTableToolbar numSelected={selected.length} />
+          <TableContainer>
+            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+              <EnhancedTableHead
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <TableBody>
+                {visibleRows.map((row, index) => {
+                  const isItemSelected = isSelected(row.UserId);
+                  const labelId = `enhanced-table-checkbox-${index}`;
+
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={row.UserId}
+                      selected={isItemSelected}
+                      sx={{ cursor: "pointer" }}
                     >
-                      {row.UserName}
-                    </TableCell>
-                    <TableCell align="left">{row.Email}</TableCell>
-                    <TableCell align="left">{row.Password}</TableCell>
-                    <TableCell align="left">{row.Role}</TableCell>
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          color="primary"
+                          onClick={(event) => handleClick(event, row.UserId)}
+                          checked={isItemSelected}
+                          inputProps={{
+                            "aria-labelledby": labelId,
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="none"
+                        
+                      >
+                        {row.UserName}
+                      </TableCell>
+                      <TableCell align="left">{row.Email}</TableCell>
+                      <TableCell align="left">{row.Password}</TableCell>
+                      <TableCell align="left">{row.Role}</TableCell>
+                      <TableCell>
+                        <Button
+                          id="demo-customized-button"
+                          aria-controls={
+                            open ? "demo-customized-menu" : undefined
+                          }
+                          aria-haspopup="true"
+                          aria-expanded={open ? "true" : undefined}
+                          variant="contained"
+                          disableElevation
+                          onClick={(event) =>
+                            handleClickMenu(event, row.UserId)
+                          }
+                          endIcon={<KeyboardArrowDownIcon />}
+                        >
+                          Options
+                        </Button>
+                        <StyledMenu
+                          id="demo-customized-menu"
+                          MenuListProps={{
+                            "aria-labelledby": "demo-customized-button",
+                          }}
+                          anchorEl={anchorEl}
+                          open={open}
+                          onClose={handleClose}
+                        >
+                          <MenuItem  onClick={onShowForm} disableRipple>
+                            <EditIcon  />
+                            Edit
+                          </MenuItem>
+                          <MenuItem onClick={() => deleteUser(selectedUserId)} disableRipple>
+                            <DeleteIcon />
+                            Delete
+                          </MenuItem>
+                        </StyledMenu>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+                {emptyRows > 0 && (
+                  <TableRow>
+                    <TableCell colSpan={6} />
                   </TableRow>
-                );
-              })}
-              {emptyRows > 0 && (
-                <TableRow>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-    </Box>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+      </Box>
+    </div>
   );
 }

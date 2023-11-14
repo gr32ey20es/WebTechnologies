@@ -44,12 +44,12 @@ export const getAllUser = (req, res) => {
 
 // Thêm một người dùng mới
 export const AddUser = (req, res) => {
-  const { username, email, roleId } = req.body;
+  const { username, email, password, role } = req.body;
   // Thực hiện truy vấn hoặc xử lý để thêm người dùng vào cơ sở dữ liệu
   // Ví dụ:
   db.query(
-    'INSERT INTO users (UserName, Email, RoleId) VALUES (?, ?, ?)',
-    [username, email, roleId],
+    'INSERT INTO users (UserName, Email, Password, RoleId) VALUES (?, ?, ?, ?)',
+    [username, email, password, role],
     (error, results) => {
       if (error) {
         console.error(error);
@@ -64,12 +64,13 @@ export const AddUser = (req, res) => {
 // Chỉnh sửa thông tin người dùng
 export const EditUser = (req, res) => {
   const userId = req.params.userId;
-  const { username, email, roleId } = req.body;
+  const { username, email, password, role } = req.body;
+  
   // Thực hiện truy vấn hoặc xử lý để chỉnh sửa thông tin người dùng trong cơ sở dữ liệu
   // Ví dụ:
   db.query(
-    'UPDATE users SET UserName = ?, Email = ?, RoleId = ? WHERE UserId = ?',
-    [username, email, roleId, userId],
+    'UPDATE users SET UserName = ?, Email = ?, Password = ?, RoleId = ? WHERE UserId = ?',
+    [username, email, password, role, userId],
     (error, results) => {
       if (error) {
         console.error(error);
