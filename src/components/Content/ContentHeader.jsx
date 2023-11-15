@@ -47,7 +47,7 @@ const ContentHeader = () => {
     <div className="container mt-4">
       <div class="row justify-content-center align-items-center g-2">
         <div class="col">
-          <img src={logo} alt="123" style={{ width: "100%" }} />
+          <img src= {logo} alt="123" style={{ width: "100%" }} />
         </div>
       </div>
 
