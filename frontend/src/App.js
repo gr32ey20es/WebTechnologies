@@ -1,8 +1,10 @@
-import "./App.css";
 import TheHeader from "./login/component/TheHeader/TheHeader";
 import TheLogin from "./login/pages/Login/TheLogin";
 import TheRegister from "./login/pages/Register/TheRegister"
-import Dashboard from "./login/pages/Dashboard/Dashboard.jsx"
+import Dashboard from "./login/pages/Dashboard/Dashboard.jsx";
+import Homepage from './homepage/Homepage.js';
+import './App.css';
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -36,6 +38,10 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <Dashboard />,
       },
+      {
+        path: "/homepage",
+        element: <Homepage />,
+      },
     ],
   },
   {
@@ -50,8 +56,11 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <Dashboard />,
   },
+  {
+    path: "/homepage",
+    element: <Homepage />,
+  },
 ]);
-
 function App() {
   return (
     <div className="App">
