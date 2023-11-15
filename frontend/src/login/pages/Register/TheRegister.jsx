@@ -1,15 +1,32 @@
 import React, { useState } from "react";
 import "../Login/TheLogin";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
-function TheLogin() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+function TheRegister() {
+  const [inputs, setInputs] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [err, setError] = useState(null);
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    // Thực hiện xử lý đăng ký tài khoản tại đây
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(inputs);
+      await axios.post("http://localhost:4000/api/auth/register", inputs);
+      navigate("/login");
+    } catch (err) {
+      setError(err.response.data);
+    }
+  };
   return (
     <div className="login">
       <div className="login-container">
@@ -23,34 +40,38 @@ function TheLogin() {
             <div className="form-group">
               <label htmlFor="username">Tài khoản:</label>
               <input
+                required
                 type="text"
                 id="username"
+                name="username"
                 placeholder="Nhập tài khoản"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={handleChange}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="password">Mật khẩu:</label>
+              <label htmlFor="email">Email:</label>
               <input
-                type="password"
-                id="password"
-                placeholder="Nhập mật khẩu"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                required
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Nhập email"
+                onChange={handleChange}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="password">Nhập lại mật khẩu:</label>
+              <label htmlFor="password"> Mật khẩu:</label>
               <input
                 type="password"
                 id="password"
+                name="password"
                 placeholder="Nhập mật khẩu"
+                onChange={handleChange}
               />
             </div>
           </div>
           <div className="login-btn">
-            <button >Đăng Ký</button>
+            <button onClick={handleSubmit}> Đăng Ký</button>
           </div>
           <div className="login-footer">
             <a href="/login">Bạn đã có tài khoản? Đăng nhập ngay!</a>
@@ -61,4 +82,4 @@ function TheLogin() {
   );
 }
 
-export default TheLogin;
+export default TheRegister;
