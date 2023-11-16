@@ -1,0 +1,41 @@
+.aside {
+    width: 300px; height: fit-content;
+    margin: 0 10px;
+}
+.informations {
+    position: fixed;
+    left: 12px; top: 30px;
+    box-shadow: -2px 2px 3px antiquewhite;
+    border-radius: 10px;
+}
+
+.timer {
+    border-bottom: 1px solid darkblue;
+    padding: 5px 20px
+}
+
+.linkBoxs {
+    flex-wrap: wrap;
+    justify-content: start;
+    width: 160px; height: fit-content;
+    padding: 10px;
+    background-color: antiquewhite;
+}
+.linkBox {
+    width: 22px; height: 22px;
+    margin: 3px;
+    font-size: 11px;
+    border: 1px solid gray;
+    border-radius: 100%;
+}
+.linkBox > a {
+    margin: 0 0 1.5px 0.5px;
+    text-decoration: none;
+    color: black;
+}
+.button {
+    border-radius: 100%;
+    width: 22px; height: 22px;
+    padding: 0 0 3px 0;
+    margin: 0 0 0 3px;
+}
