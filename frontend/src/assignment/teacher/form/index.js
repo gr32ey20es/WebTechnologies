@@ -51,7 +51,7 @@ function Form ({ setIsRefreshParent }) {
             </div>
             <div className={styles.shift}>
                 <button disabled={currentBox < 1}
-                    value="prev" onClick={handleShift}>Previous</button>
+                    value="prev" onClick={handleShift}>Prev</button>
                 <button disabled={currentBox >= lenQuestions - 5}
                     value="next" onClick={handleShift}>Next</button>
             </div>

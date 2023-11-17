@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import Switch from "react-switch"
 import TextareaAutosize from 'react-textarea-autosize';
 import { useExam } from "../exam"
 import { setExamQuestion, setExamType, addExamOption, delExamQuestion} from "../exam/actions"
 import Option from '../option';
 import styles from './ui.module.css';
 import '../basic.css'
+import TypeSwitch from './TypeSwitch';
 
 function Question ({ idQuestion, setIsRefreshParent }) {
     const [state, dispatch] = useExam()  
@@ -43,6 +43,7 @@ function Question ({ idQuestion, setIsRefreshParent }) {
         dispatch(delExamQuestion({ idQuestion }))
         setIsRefreshParent(prev => !prev)
     }
+
     return (
         <div id={"question"+idQuestion} className={styles.questionBox}>
             <div className={styles.question}>
@@ -70,9 +71,9 @@ function Question ({ idQuestion, setIsRefreshParent }) {
                 )}
             </div>
             <div className={styles.operator}>
-                <Switch onChange={handleChangeSwitch} checked={type==='radio'} />
-                <button onClick={handleAddButton} type="button">Add option</button>
-                <button onClick={handleDeleteButton} type="button">Delete question</button>
+                <TypeSwitch onChange={handleChangeSwitch} checked={type==='radio'}/>
+                <button onClick={handleAddButton} type="button">Option Add</button>
+                <button onClick={handleDeleteButton} type="button">Delete</button>
             </div>
         </div>
     )

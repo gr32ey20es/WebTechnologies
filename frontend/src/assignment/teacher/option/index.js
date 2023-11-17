@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useExam } from "../exam"
 import { setExamOption, setExamAnswer, delExamOption } from "../exam/actions"
+import { useExam } from "../exam"
 import styles from './ui.module.css';
 import '../basic.css'
-import Bin from './bin.jpg'
+import Bin from './bin.png'
+
 
 function Option ({ idOption, idQuestion, setIsRefreshParent }) {
     const [state, dispatch] = useExam()
@@ -60,8 +61,7 @@ function Option ({ idOption, idQuestion, setIsRefreshParent }) {
                     checked={answers.includes(idOption)} />
             </div>
             <div className={"center " + styles.bins}>
-                <img alt='' src={Bin} className={styles.binImg}
-                onClick={handleImgClick}/>
+                <img alt='' src={Bin} onClick={handleImgClick}/>
             </div>
         </label>
     </>
