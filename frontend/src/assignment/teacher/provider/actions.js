@@ -1,5 +1,5 @@
 import { 
-    SET_USER_CURRENT_BOX, SET_EXAM_TIMELIMIT,
+    SET_USER_CURRENT_BOX, SET_EXAM_TIMELIMIT, SET_EXAM_TITLE,
     SET_EXAM_DATA, SET_EXAM_TYPE, SET_EXAM_OPTION, SET_EXAM_ANSWER, SET_EXAM_QUESTION, 
     ADD_EXAM_QUESTION , ADD_EXAM_OPTION, DEL_EXAM_QUESTION, DEL_EXAM_OPTION
 } from "./constants"
@@ -14,6 +14,13 @@ export const setUserCurrentBox = (payload) => {
 export const setExamTimeLimit = (payload) => {
     return {
         type: SET_EXAM_TIMELIMIT,
+        payload
+    }
+}
+
+export const setExamTitle = (payload) => {
+    return {
+        type: SET_EXAM_TITLE,
         payload
     }
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { setExamOption, setExamAnswer, delExamOption } from "../exam/actions"
-import { useExam } from "../exam"
+import { setExamOption, setExamAnswer, delExamOption } from "../provider/actions"
+import { useExam } from "../provider"
 import styles from './ui.module.css';
 import '../basic.css'
 import Bin from './bin.png'

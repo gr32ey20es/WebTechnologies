@@ -1,15 +1,18 @@
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Question from "../question"
-import { useExam } from "../exam"
-import { setUserCurrentBox } from '../exam/actions'
+import { useExam } from "../provider"
+import { setUserCurrentBox } from '../provider/actions'
 import '../basic.css'
 import styles from './ui.module.css'
 import Circle from './circle.png'
 
-function Form ({ setIsRefreshParent }) {
+
+function Form ({ examId, setIsRefreshParent }) {
     const [state, dispatch] = useExam()
     const currentBox = state.user.currentBox
     const lenQuestions = state.exam.questions.length
+    const navigate = useNavigate();
 
     const handleShift = (e) => {
         e.preventDefault()
@@ -18,12 +21,18 @@ function Form ({ setIsRefreshParent }) {
     }
 
     const handleFormSubmit = (e) => {
-        e.preventDefault();
-        const postTest = async () => {
-            await axios.post('http://localhost:4000/postTest', state, 
+        e.preventDefault()
+        const postExam = async () => {
+            await axios.post('http://localhost:4000/api/exams', state, 
                 { headers: { 'Content-Type': 'application/json' }})
         }
-        postTest()
+        const putExam = async () => {
+            await axios.put('http://localhost:4000/api/exams/'+examId, state, 
+                { headers: { 'Content-Type': 'application/json' }})
+        }
+        if (parseInt(examId) === 0) postExam()
+        else putExam()
+        navigate(-1)
     }
     
     const QuestionBoxs = () => {

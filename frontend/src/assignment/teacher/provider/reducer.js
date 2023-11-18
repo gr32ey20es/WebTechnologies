@@ -1,5 +1,5 @@
 import { 
-    SET_USER_CURRENT_BOX, SET_EXAM_TIMELIMIT,
+    SET_USER_CURRENT_BOX, SET_EXAM_TIMELIMIT, SET_EXAM_TITLE,
     SET_EXAM_DATA, SET_EXAM_TYPE, SET_EXAM_OPTION, SET_EXAM_ANSWER, SET_EXAM_QUESTION, 
     ADD_EXAM_QUESTION , ADD_EXAM_OPTION, DEL_EXAM_QUESTION, DEL_EXAM_OPTION
 } from "./constants"
@@ -9,6 +9,7 @@ export const initState = {
         currentBox: null
     },
     exam: {
+        title: '',
         timeLimit: 0,
         questions: [],
     }
@@ -41,13 +42,23 @@ const reducer = (state, action) => {
                 'timeLimit': action.payload
             }
             break;
-
-        case SET_EXAM_DATA:
+        
+        case SET_EXAM_TITLE:
             newState = state
             newState.exam = {
                 ...newState.exam,
-                ...action.payload
+                'title': action.payload
             }
+            break;
+        case SET_EXAM_DATA:
+            newState = state
+            if(action.payload === null) 
+                newState = {...initState}
+            else
+                newState.exam = {
+                    ...newState.exam,
+                    ...action.payload
+                }
             break;
 
         case SET_EXAM_TYPE:

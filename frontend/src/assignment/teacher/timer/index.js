@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { setExamTimeLimit } from "../exam/actions"
-import { useExam } from "../exam"
+import { setExamTimeLimit } from "../provider/actions"
+import { useExam } from "../provider"
 import styles from './ui.module.css';
 
 function Timer () {

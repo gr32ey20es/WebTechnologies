@@ -5,7 +5,7 @@
 }
 .informations {
     position: fixed;
-    left: 20px; top: 30px;
+    left: 20px; top: 100px;
     border: 1px solid lightgray;
     border-radius: 10px;
     padding: 10px 0;
@@ -15,7 +15,6 @@
     border-bottom: 1px solid darkred;
     padding: 5px 20px;
     margin: 0 0 10px 0;
-
 }
 
 .linkBoxs {
@@ -46,4 +45,31 @@
     margin: 5px;
     font-size: 16px;
     font-weight: 600;
+}
+
+.values {
+    position: fixed;
+    left: 20px; top: 25px;
+    width: 221px;
+    margin: 0 0 5px 0;
+    padding: 3px 0 1px 0;
+    word-break: break-word;
+    text-align: center;
+    font-size: 17px;
+    line-height: 23px;
+    font-weight: 650;
+}
+
+.inputText {
+    resize: none;
+    width: 100%; height: fit-content;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    line-height: 23px;
+    box-shadow: -2px 2px 3px grey;
+    background-color: whitesmoke;
+    padding: 0 10px 0 10px;
+    margin: 0 0 -1px 0;
+    border-radius: 3px;
 }

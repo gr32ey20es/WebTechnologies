@@ -1,56 +1,27 @@
-import { AssignmentOnline } from "./assignment";
-import { Teacher } from "./assignment/teacher";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  // Route,
-  Outlet,
-} from "react-router-dom";
+import React from "react";
+import { Route, BrowserRouter as Router, Routes, Link } from "react-router-dom";
+import { User } from "./assignment/user"
+import Teacher from "./assignment/teacher";
 
-const Layout = () => {
+function TheHome() {
   return (
-    <>
-      <Outlet />
-    </>
+    <div style={{display: 'flex', flexDirection: 'column'}}>
+      <Link to="/user">Go to User</Link>
+      <Link to="/teacher">Go to Teacher</Link>
+    </div>
   );
-};
+}
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "/assignment",
-        element: <AssignmentOnline />,
-      }, 
-      {
-        path: "/teacher",
-        element: <Teacher />,
-      },
-    ],
-  },
-  {
-    path: "/register",
-    element: <div>This is Register!</div>,
-  },
-  {
-    path: "/login",
-    element: <div>This is Login!</div>,
-  },
-  {
-	path: "/assignment",
-	element: <AssignmentOnline />,
-  },
-  {
-    path: "/teacher",
-    element: <Teacher />,
-  },
-]);
 function App() {
   return (
     <div className="App">
-      <RouterProvider router={router} />
+      <Router>
+        <Routes>
+          <Route path="/" element={<TheHome />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/teacher/*" element={<Teacher />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
