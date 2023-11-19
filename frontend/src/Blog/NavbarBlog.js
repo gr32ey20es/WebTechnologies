@@ -1,11 +1,11 @@
 import React from "react";
 
-const Navbar = () => {
+const NavbarBlog = () => {
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          <h1>Study4</h1>
+          <h1>Study4Blog</h1>
           <button
             className="navbar-toggler"
             type="button"
@@ -85,4 +85,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarBlog;

@@ -9,6 +9,9 @@ app.use(cors())
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 
+
+
+/////////////////////////////////////////////////////
 app.listen(4000, () => {
   console.log("Connected!");
 });

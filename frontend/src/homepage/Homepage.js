@@ -1,5 +1,5 @@
 import React from "react";
-import Head from "./Navbar/Navbar";
+import Navbar from "./Navbar/Navbar";
 // import Carousel from "./Body/Carousel";
 import Card from "./Body/Card";
 import Footer from "./Footer/Footer";
@@ -8,7 +8,7 @@ import Footer from "./Footer/Footer";
 const header = () => {
   return (
     <>
-      <Head />
+      <Navbar />
       {/* <Carousel /> */}
       <h1>TEST</h1>
       <div className="container">
