@@ -11,6 +11,7 @@ import {
   // Route,
   Outlet,
 } from "react-router-dom";
+import ContentHeader from "./course-online/Content/ContentHeader.jsx";
 
 const Layout = () => {
   return (
@@ -65,6 +66,7 @@ function App() {
   return (
     <div className="App">
       <RouterProvider router={router} />
+      <ContentHeader></ContentHeader>
     </div>
   );
 }

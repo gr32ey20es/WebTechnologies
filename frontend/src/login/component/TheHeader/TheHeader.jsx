@@ -4,7 +4,7 @@ import Logo from "../../img/logo_full_sm.png";
 
 function TheHeader() {
   return (
-    <div className="header">
+    <div className="header container-fluid">
       <div className="header-left">
         <a class="logo" href="/">
           <img src={Logo} alt="Logo" />
