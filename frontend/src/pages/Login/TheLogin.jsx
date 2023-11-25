@@ -20,7 +20,6 @@ const TheLogin = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(inputs)
     e.preventDefault();
 
     if (!inputs.email || !inputs.password) {

@@ -88,7 +88,7 @@ export const deleteUser = (req, res) => {
   const userId = req.params.userId;
   // Thực hiện truy vấn hoặc xử lý để xóa người dùng khỏi cơ sở dữ liệu
   // Ví dụ:
-  db.query('DELETE FROM users WHERE "UserId = $1', [userId], (error, results) => {
+  db.query('DELETE FROM users WHERE "UserId" = $1', [userId], (error, results) => {
     if (error) {
       console.error(error);
       res.status(500).send('Lỗi server');

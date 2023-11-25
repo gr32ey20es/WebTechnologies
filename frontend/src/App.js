@@ -19,7 +19,9 @@ const Layout = () => {
     <>
       <TheHeader />
       <Outlet />
+
     </>
+    
   );
 };
 
