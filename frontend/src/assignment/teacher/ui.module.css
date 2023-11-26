@@ -1,0 +1,29 @@
+.listExams {
+    width: 600px;
+    border: 1px solid gray;
+    padding: 10px;
+}
+.exam {
+    width: 100%;
+    justify-content: space-between;
+    padding: 5px 10px 6px 15px;
+    margin: 5px 0 5px 0;
+    border-radius: 1000px;
+    box-shadow: 0 0 3px gray;
+}
+.exam:hover {
+    background-color: #f0f0f0;
+}
+.operator > * {
+    width: 15px;
+    margin: 0 2.5px 0 5px;
+}
+.operator img:hover {
+    scale: 1.4;
+}
+
+.buttonCreate {
+    padding: 3px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}

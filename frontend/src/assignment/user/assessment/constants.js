@@ -1,0 +1,5 @@
+export const SET_ASSESSMENT_STARTED = 'set_assessment_started'
+export const SET_ASSESSMENT_FINISHED = 'set_assessment_finished'
+export const SET_ASSESSMENT_DATA  = 'set_assessment_data'
+export const SET_USER_DATA = 'set_user_data'
+export const SET_USER_CURRENT_BOX = 'set_user_current_box'
