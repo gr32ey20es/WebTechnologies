@@ -1,0 +1,24 @@
+.header {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 24px;
+  border-bottom: solid 1px rgba(128, 128, 128, 0.5);
+}
+.logo img {
+  width: auto;
+  height: 35px;
+}
+.nav a {
+  text-decoration: none;
+  margin: 0 8px;
+  font-weight: 600;
+}
+.btn-login {
+  padding: 8px 12px;
+  color: #fff;
+  border-radius: 16px;
+  background-color: blueviolet;
+}
