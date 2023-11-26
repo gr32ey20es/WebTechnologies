@@ -1,7 +1,6 @@
 import React from "react";
 import Footer from "../../homepage/Footer/Footer";
 import { Link } from "react-router-dom";
-import NavbarBlog from "../NavbarBlog";
 
 const Home = () => {
   const posts = [
@@ -51,7 +50,6 @@ const Home = () => {
   ];
   return (
     <>
-      <NavbarBlog />
       <div className="container">
         <h1>Content</h1>
         {posts.map((post) => (
