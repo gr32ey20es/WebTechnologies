@@ -1,13 +1,13 @@
 version: '3'
 services:  
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - '3000:3000'
-    volumes:
-      - ./frontend/src:/app/src
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - '3000:3000'
+  #   volumes:
+  #     - ./frontend/src:/app/src
 
   database:
     container_name: database
@@ -35,13 +35,13 @@ services:
     depends_on:
       - database
 
-  adminer:
-    container_name: adminer
-    image: adminer
-    restart: unless-stopped
-    ports:
-      - 8080:8080
-    depends_on:
-      - database
+  # adminer:
+  #   container_name: adminer
+  #   image: adminer
+  #   restart: unless-stopped
+  #   ports:
+  #     - 8080:8080
+  #   depends_on:
+  #     - database
 
 

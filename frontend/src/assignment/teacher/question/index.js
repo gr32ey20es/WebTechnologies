@@ -1,36 +1,22 @@
+import { setExamQuestion, setExamType, addExamOption, delExamQuestion } from "../provider/actions";
+import { useExam } from "../provider";
 import { useEffect, useState } from 'react';
-import TextareaAutosize from 'react-textarea-autosize';
-import { useExam } from "../provider"
-import { setExamQuestion, setExamType, addExamOption, delExamQuestion} from "../provider/actions"
+import TypeSwitch from '../customlibrary/typeswitch';
+import PEditable from '../customlibrary/peditable';
+import '../customlibrary/basic.css';
+import styles from './.module.css';
 import Option from '../option';
-import styles from './ui.module.css';
-import '../basic.css'
-import TypeSwitch from './TypeSwitch';
 
 function Question ({ idQuestion, setIsRefreshParent }) {
+    // exam-state
     const [state, dispatch] = useExam()  
-    const type = state.exam.questions[idQuestion].type  
-    const options = state.exam.questions[idQuestion].options
-    const question = state.exam.questions[idQuestion].question
+    const { type, options, question } = state.exam.questions[idQuestion]  
 
-    const [value, setValue] = useState(question)
-    const [isEditing, setIsEditing] = useState(false)
+    // self-state
     const [isRefresh, setIsRefresh] = useState(false)
-
     useEffect(()=>{}, [isRefresh])
 
-    const handleClick = () => setIsEditing(true)
-    const handleBlur = () => {
-        if(/^\s*$/.test(value))
-            setValue('')
-        else
-        dispatch(setExamQuestion({idQuestion, value}))
-
-        setIsEditing(false);
-    }
-    const handleChange = (e) => setValue(e.target.value)
-    const handleKeyDown = (e) => (e.keyCode === 13) ? handleBlur() : null;
-
+    // function-handle
     const handleChangeSwitch = () => {
         dispatch(setExamType({ idQuestion, type }))
         setIsRefresh(prev => !prev)
@@ -43,23 +29,18 @@ function Question ({ idQuestion, setIsRefreshParent }) {
         dispatch(delExamQuestion({ idQuestion }))
         setIsRefreshParent(prev => !prev)
     }
+    const _setExamQuestion = (value)=>dispatch(setExamQuestion({idQuestion, value}))
 
     return (
         <div id={"question"+idQuestion} className={styles.questionBox}>
             <div className={styles.question}>
-                <p className={styles.indexs}><strong>{idQuestion+1}. &nbsp;</strong></p>
-                { !isEditing  ? 
-                <p onClick={handleClick}>
-                    {value ? value : 'Enter this question'}
-                </p> :
-                <TextareaAutosize
-                    autoFocus
-                    value={value}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    onKeyDown={handleKeyDown}
-                    className={styles.inputText} /> 
-                }
+                <p className={styles.indexs} style={{fontSize: 18}}><strong>{idQuestion+1}.</strong></p>
+                <PEditable 
+                initValue={question} 
+                notify='Enter question' 
+                onBlur={_setExamQuestion} 
+                fontSize={18}
+                />
             </div>
             <div className="center column">
                 { options.map((_, idOption) =>
@@ -72,8 +53,8 @@ function Question ({ idQuestion, setIsRefreshParent }) {
             </div>
             <div className={styles.operator}>
                 <TypeSwitch onChange={handleChangeSwitch} checked={type==='radio'}/>
-                <button onClick={handleAddButton} type="button">Option Add</button>
-                <button onClick={handleDeleteButton} type="button">Delete</button>
+                <button onClick={handleAddButton} type="button" className="pointer">Option Add</button>
+                <button onClick={handleDeleteButton} type="button" className="pointer">Delete</button>
             </div>
         </div>
     )

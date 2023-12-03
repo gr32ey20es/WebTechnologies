@@ -60,7 +60,33 @@ const getAllExam = (req, res) => {
 	);
 }
 
-const getExam = (req, res) => {}
+function joinv2(data) {
+	const exams = {...data.questions}
+	delete data.questions
+
+	exams.id = data.id
+	delete data.id
+
+	exams.title = data.title
+	delete data.title
+
+	return exams;
+}
+
+const getExam = (req, res) => {
+		db.query(
+		'SELECT id, title, questions FROM exams WHERE id=$1',
+		[req.params.examId],
+		(error, results) => {
+			if (error) {
+				console.error(error);
+				res.status(500).send('Lỗi server');
+			} else {
+				res.json(joinv2(results.rows[0]));
+			}
+		}
+	);
+}
 
 const getEditExam = (req, res) => {
 	db.query(

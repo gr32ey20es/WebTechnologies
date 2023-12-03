@@ -3,23 +3,26 @@ import axios from "axios";
 import Question from "../question"
 import { useExam } from "../provider"
 import { setUserCurrentBox } from '../provider/actions'
-import '../basic.css'
-import styles from './ui.module.css'
-import Circle from './circle.png'
-
+import '../customlibrary/basic.css'
+import styles from './.module.css'
+import Circle from '../img/circle.png'
 
 function Form ({ examId, setIsRefreshParent }) {
+    // declare
+    const navigate = useNavigate();
+
+    // exam-state
     const [state, dispatch] = useExam()
     const currentBox = state.user.currentBox
     const lenQuestions = state.exam.questions.length
-    const navigate = useNavigate();
 
+    // function
     const handleShift = (e) => {
         e.preventDefault()
         dispatch(setUserCurrentBox(e.target.value))
         setIsRefreshParent(prev => !prev)
     }
-
+    
     const handleFormSubmit = (e) => {
         e.preventDefault()
         const postExam = async () => {
@@ -32,6 +35,7 @@ function Form ({ examId, setIsRefreshParent }) {
         }
         if (parseInt(examId) === 0) postExam()
         else putExam()
+
         navigate(-1)
     }
     
@@ -40,9 +44,8 @@ function Form ({ examId, setIsRefreshParent }) {
         let questionBoxs = [];
 
         for(let id=currentBox; id < maxQuestion; id++)
-            questionBoxs.push(
-            <Question key={id} idQuestion={id} setIsRefreshParent={setIsRefreshParent}/>
-            )
+            questionBoxs.push( 
+                <Question key={id} idQuestion={id} setIsRefreshParent={setIsRefreshParent}/> )
 
         return questionBoxs
     }    
@@ -59,13 +62,13 @@ function Form ({ examId, setIsRefreshParent }) {
                 <img src={Circle} alt="" width='37px' className={styles.logo}/>
             </div>
             <div className={styles.shift}>
-                <button disabled={currentBox < 1}
+                <button disabled={currentBox < 1} className='pointer'
                     value="prev" onClick={handleShift}>Prev</button>
-                <button disabled={currentBox >= lenQuestions - 5}
+                <button disabled={currentBox >= lenQuestions - 5} className='pointer'
                     value="next" onClick={handleShift}>Next</button>
             </div>
             <div>
-                <button form="userForm" type="submit">Submit</button>
+                <button className='pointer' form="userForm" type="submit">Submit</button>
             </div>
         </footer>
     </>

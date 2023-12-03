@@ -50,6 +50,7 @@ const reducer = (state, action) => {
                 'title': action.payload
             }
             break;
+            
         case SET_EXAM_DATA:
             newState = state
             if(action.payload === null) 
@@ -68,6 +69,12 @@ const reducer = (state, action) => {
 
             newState.exam.questions[idQuestion]
             .type = (type === 'radio' ? 'checkbox' : 'radio')
+            
+            if(type === 'checkbox') 
+                newState.exam.questions[idQuestion].answers = 
+                [newState.exam.questions[idQuestion].answers[0]]
+
+
             break;
         case SET_EXAM_OPTION: 
             idQuestion = action.payload.idQuestion
