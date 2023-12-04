@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../../homepage/Footer/Footer";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import axios from 'axios';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
 
+  const getText = (html) => {
+    const doc = new DOMParser().parseFromString(html, "text/html")
+    return doc.body.textContent
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,7 +71,7 @@ const Home = () => {
                 <h5 className="card-title">{post.title}</h5>
               </Link>
 
-              <p className="card-text">{post.desc}</p>
+              <p className="card-text">{getText(post.desc)}</p>
               <a href="#" className="btn btn-primary">
                 Read more
               </a>
