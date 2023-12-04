@@ -5,8 +5,10 @@ import styles from './.module.css';
 
 function Timer () {
     const [state, dispatch] = useExam()
-    const initTimer = state.exam.timeLimit
+    const [timeNow, ] = useState(() => (Date.now()))
+    const initTimer = Math.floor((state.exam.deadline - timeNow) / 1000)
 
+    console.log(state.exam.deadline, timeNow, initTimer)
     const [date, setDate] = useState(null)
     const [timer, setTimer] = useState(initTimer)
 

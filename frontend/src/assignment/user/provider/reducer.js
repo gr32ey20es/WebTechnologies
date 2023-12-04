@@ -1,4 +1,5 @@
-import { 
+import {
+    SET_STORED_EXAM_DATA,
     SET_USER_CURRENT_BOX,
     SET_EXAM_DATA, SET_EXAM_ANSWER,
     SET_EXAM_STARTED, SET_EXAM_FINISHED
@@ -14,6 +15,7 @@ export const initState = {
     exam: {
         title: '',
         timeLimit: 0,
+        deadline: '',
         questions: [],
     }
 }
@@ -28,6 +30,12 @@ const reducer = (state, action) => {
         operator
 
     switch (action.type) {
+        case SET_STORED_EXAM_DATA: 
+            newState = {
+                ...action.payload
+            }
+            break;
+            
         case SET_EXAM_STARTED:
             newState = {
                 ...state,
@@ -60,6 +68,7 @@ const reducer = (state, action) => {
                     ...newState.exam,
                     ...action.payload
                 }
+            newState.exam.deadline = Date.now() + newState.exam.timeLimit * 1000;
             break;
 
         case SET_EXAM_ANSWER:

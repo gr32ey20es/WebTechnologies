@@ -1,4 +1,5 @@
 import { 
+    SET_STORED_EXAM_DATA,
     SET_USER_CURRENT_BOX,
     SET_EXAM_DATA, SET_EXAM_ANSWER,
     SET_EXAM_STARTED, SET_EXAM_FINISHED
@@ -40,4 +41,9 @@ export const setExamAnswer = (payload) => {
     }
 }
 
-
+export const setStoredExamData = (payload) => {
+    return {
+        type: SET_STORED_EXAM_DATA,
+        payload
+    }
+}

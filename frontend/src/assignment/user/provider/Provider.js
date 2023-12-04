@@ -2,7 +2,7 @@ import { useEffect, useReducer, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import reducer, { initState } from './reducer'
-import { setExamData, setUserCurrentBox, setExamStarted } from './actions'
+import { setExamData, setUserCurrentBox, setExamStarted, setStoredExamData } from './actions'
 import Context from './Context'
 
 function Provider({ examId, children }) {
@@ -14,18 +14,20 @@ function Provider({ examId, children }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (parseInt(examId) === 0) {
-                dispatch(setExamData(null))
+            const storedExamData = localStorage.getItem('storedExamData');
+            if (storedExamData) {
+                const parsedExamData = JSON.parse(storedExamData);
+                dispatch(setStoredExamData(parsedExamData))
+                return;
             }
-            else {
-                try {
-                    const response = await axios.get('http://localhost:4000/api/exams/'+examId, {
-                        headers: {'Content-Type': 'application/json'}
-                    });
-                    dispatch(setExamData(response.data));
-                } catch (error) {
-                    console.error(error);
-                }
+            
+            try {
+                const response = await axios.get('http://localhost:4000/api/exams/'+examId, {
+                    headers: {'Content-Type': 'application/json'}
+                });
+                dispatch(setExamData(response.data));
+            } catch (error) {
+                console.error(error);
             }
             dispatch(setExamStarted());
             dispatch(setUserCurrentBox(0));
@@ -34,8 +36,15 @@ function Provider({ examId, children }) {
         fetchData();
     }, [examId]);
 
+    useEffect(() => {
+        if (state)
+          localStorage.setItem('storedExamData', JSON.stringify(state));
+      }, [state]);
+    
+
     useEffect(()=>{ 
         if(state.isExamFinished) {
+            localStorage.removeItem('storedExamData');
             navigate('/u/s/e/r')
         }
     }, [navigate, state.isExamFinished])
