@@ -15,9 +15,10 @@ const Single = () => {
   const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
+    console.log(postId);
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/blog/:${postId}`);
+        const res = await axios.get(`http://localhost:4000/api/postBlog/blog/${postId}`);
         setPost(res.data);
       } catch (error) {
         console.log(error);

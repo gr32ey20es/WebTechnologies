@@ -5,7 +5,7 @@ import postBlogRoutes from "./routes/postBlog.js";
 import multer from "multer";
 
 
-import cors from 'cors'
+import cors from 'cors';
 const app = express();
 
 const storage = multer.diskStorage({
@@ -17,16 +17,12 @@ const storage = multer.diskStorage({
   }
 })
 
-
-
 const upload = multer({storage})
 
 app.post('/api/upload', upload.single('file'), function (req, res) {
   const file = req.file;
   res.status(200).json(file.filename)
 })
-
-
 
 app.use(express.json());
 app.use(cors())

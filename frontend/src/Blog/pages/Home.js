@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../../homepage/Footer/Footer";
-import { Link} from "react-router-dom";
-import axios from 'axios';
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
 
   const getText = (html) => {
-    const doc = new DOMParser().parseFromString(html, "text/html")
-    return doc.body.textContent
-  }
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/blog`)
+        const res = await axios.get(`http://localhost:4000/api/postBlog/blog`);
         setPosts(res.data);
+        //console.log(res.data);
       } catch (error) {
-          console.log(error);
+        console.log(error);
       }
     };
     fetchData();
@@ -54,11 +55,11 @@ const Home = () => {
     <>
       <div className="container">
         <h1>Content</h1>
-        {posts.map((post) => (
+        {posts?.map((post) => (
           <div
             className="card"
             key={post.id}
-            style={{ width: "18rem", display: "inline-block", margin: "4px" }}
+            style={{ width: "18rem", display: "inline-block", margifn: "4px" }}
           >
             <img
               src={post.img}
@@ -72,7 +73,7 @@ const Home = () => {
               </Link>
 
               <p className="card-text">{getText(post.desc)}</p>
-              <a href="#" className="btn btn-primary">
+              <a href="#!" className="btn btn-primary">
                 Read more
               </a>
             </div>
