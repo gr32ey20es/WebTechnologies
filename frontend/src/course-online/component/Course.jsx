@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/banner.jpg";
+import banner from "../../course-online/Image/banner.jpg";
 import "./banner.css";
 
 
@@ -42,12 +42,12 @@ const tempData = [
   },
 ]
 
-const ContentHeader = () => {
+const CourseContent = () => {
   return (
     <div className="container mt-4">
       <div class="row justify-content-center align-items-center g-2">
         <div class="col">
-          <img src={logo} alt="123" style={{ width: "100%" }} />
+          <img src={banner} alt="123" style={{ width: "100%" }} />
         </div>
       </div>
 
@@ -88,4 +88,4 @@ const ContentHeader = () => {
   );
 };
 
-export default ContentHeader;
+export default CourseContent;

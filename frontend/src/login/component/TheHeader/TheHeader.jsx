@@ -6,7 +6,7 @@ function TheHeader() {
   return (
     <div className="header container-fluid">
       <div className="header-left">
-        <a class="logo" href="/">
+        <a class="logo" href="/homepage">
           <img src={Logo} alt="Logo" />
         </a>
       </div>

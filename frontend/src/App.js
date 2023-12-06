@@ -3,6 +3,7 @@ import TheLogin from "./login/pages/Login/TheLogin";
 import TheRegister from "./login/pages/Register/TheRegister"
 import Dashboard from "./login/pages/Dashboard/Dashboard.jsx";
 import Homepage from './homepage/Homepage.js';
+import CourseContent from "./course-online/component/Course.jsx";
 import './App.css';
 
 import {
@@ -11,7 +12,7 @@ import {
   // Route,
   Outlet,
 } from "react-router-dom";
-import ContentHeader from "./course-online/Content/ContentHeader.jsx";
+
 
 const Layout = () => {
   return (
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
         path: "/homepage",
         element: <Homepage />,
       },
+      {
+        path:"/courses/online",
+        element:<CourseContent/>
+      }
     ],
   },
   {
@@ -66,7 +71,6 @@ function App() {
   return (
     <div className="App">
       <RouterProvider router={router} />
-      <ContentHeader></ContentHeader>
     </div>
   );
 }

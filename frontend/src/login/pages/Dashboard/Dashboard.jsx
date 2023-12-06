@@ -254,7 +254,7 @@ export default function Dashboard() {
   };
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:8800/api/users");
+      const response = await axios.get("http://localhost:4000/api/users");
       const users = response.data;
       const newRows = users.map((user) => {
         return createData(
@@ -276,7 +276,7 @@ export default function Dashboard() {
   const deleteUser = async (userId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8800/api/users/${userId}`
+        `http://localhost:4000/api/users/${userId}`
       );
       console.log(response.data);
       fetchUsers();
