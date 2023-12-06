@@ -1,36 +1,13 @@
-import pkg from 'pg';
-const { Pool, Client } = pkg;
-
-import express from 'express';
-import cors from 'cors';
+import express from "express";
+import authRoutes from "./routes/auth.js";
+import userRoutes from "./routes/user.js"
+import cors from 'cors'
 const app = express();
-app.use(cors());
 
-const pool = new Pool({
-  user: 'kim',
-  host: 'database',
-  database: 'db',
-  password: '2003',
-  port: 5432,
-})
- 
-// console.log(await pool.query('SELECT NOW()'))
- 
-const client = new Client({
-  user: 'kim',
-  host: 'database',
-  database: 'db',
-  password: '2003',
-  port: 5432,
-})
- 
-await client.connect()
- 
-var data = await client.query('SELECT ten, mssv FROM data');
-
-app.get('/', (req, res) => {
-  res.json([data][0]['rows']);
-})
+app.use(express.json());
+app.use(cors())
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 app.listen(4000, () => {
   console.log("Connected!");
