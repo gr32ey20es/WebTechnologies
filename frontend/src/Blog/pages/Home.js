@@ -59,7 +59,7 @@ const Home = () => {
           <div
             className="card"
             key={post.id}
-            style={{ width: "18rem", display: "inline-block", margifn: "4px" }}
+            style={{ width: "18rem", display: "inline-block", margin: "6px" }}
           >
             <img
               src={post.img}
@@ -68,14 +68,14 @@ const Home = () => {
               alt="..."
             />
             <div className="card-body">
-              <Link to={`/blog/post/${post.id}`}>
+              <Link to={`/blog/post/${post.id}`} style={{textDecoration:"none"}}>
                 <h5 className="card-title">{post.title}</h5>
               </Link>
 
               <p className="card-text">{getText(post.desc)}</p>
-              <a href="#!" className="btn btn-primary">
+              <Link to={`/blog/post/${post.Id}`} className="btn btn-primary">
                 Read more
-              </a>
+              </Link>
             </div>
           </div>
         ))}

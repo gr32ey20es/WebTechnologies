@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Menu from "./Menu";
 import axios from "axios";
 import { useContext } from "react";
@@ -11,14 +11,17 @@ const Single = () => {
   const location = useLocation();
   // const navigate = useNavigate();
   const postId = location.pathname.split("/")[3];
+  const navigate = useNavigate();
 
   const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
-    console.log(postId);
+    // console.log(postId);
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/postBlog/blog/${postId}`);
+        const res = await axios.get(
+          `http://localhost:4000/api/postBlog/blog/${postId}`
+        );
         setPost(res.data);
       } catch (error) {
         console.log(error);
@@ -28,18 +31,19 @@ const Single = () => {
   }, [postId]);
 
   const handleDelete = async () => {
+    console.log("Delete");
     try {
-      await axios.delete(`/blog/${postId}`);
-
+      await axios.delete(`http://localhost:4000/api/postBlog/blog/${postId}`);
     } catch (error) {
       console.log(error);
     }
-  }
+    navigate("/blog/homepage");
+  };
 
   const getText = (html) => {
-    const doc = new DOMParser().parseFromString(html, "text/html")
-    return doc.body.textContent
-  }
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent;
+  };
 
   return (
     <>
@@ -54,22 +58,24 @@ const Single = () => {
             ></img>
             <div className="card-body" style={{ display: "flex" }}>
               <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                src="https://htmlcolorcodes.com/assets/images/colors/green-color-solid-background-1920x1080.png"
                 alt="avatar"
                 className="rounded-circle img-fluid"
-                style={{ width: 50 }}
+                style={{ width: 50, display: "inline-block", margin: "5px" }}
               />
               <div className="info" style={{ display: "inline-block" }}>
                 <span className="my-3" style={{ fontWeight: "bold" }}>
-                  {post.username}
+                  {post?.Email}
                 </span>
-                <p style={{}} className="mb-1">
-                  Posted ${post.date}
+                <p style={{ fontStyle: "italic" }} className="mb-1">
+                  Posted {post?.date}
                 </p>
               </div>
-              {currentUser === post.username && (
+              {/* {currentUser === post.username  */}
+              { true
+              && (
                 <div>
-                  <Link to={`/blog/write?edit=2`} state={post}>
+                  <Link to={`/blog/write?edit=${postId}`} state={post}>
                     <img
                       style={{ width: 50 }}
                       src="https://cdn-icons-png.flaticon.com/512/6324/6324826.png"
@@ -97,11 +103,22 @@ const Single = () => {
               </div> */}
             </div>
             <hr></hr>
-            <h1>
-              {getText(post.title)}
-            </h1>
-            <p>
+            <h1>{getText(post.title)}</h1>
+            <p style={{ textAlign: "left" }}>
               {getText(post.desc)}
+              <br></br>
+              Contrary to popular belief, Lorem Ipsum is not simply random text.
+              It has roots in a piece of classical Latin literature from 45 BC,
+              making it over 2000 years old. Richard McClintock, a Latin
+              professor at Hampden-Sydney College in Virginia, looked up one of
+              the more obscure Latin words, consectetur, from a Lorem Ipsum
+              passage, and going through the cites of the word in classical
+              literature, discovered the undoubtable source. Lorem Ipsum comes
+              from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et
+              Malorum" (The Extremes of Good and Evil) by Cicero, written in 45
+              BC. This book is a treatise on the theory of ethics, very popular
+              during the Renaissance. The first line of Lorem Ipsum, "Lorem
+              ipsum dolor sit amet..", comes from a line in section 1.10.32.
             </p>
           </div>
 

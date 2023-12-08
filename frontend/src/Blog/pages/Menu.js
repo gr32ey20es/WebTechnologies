@@ -1,16 +1,22 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Menu = () => {
   const [posts, setPosts] = useState([]);
 
+  // const getText = (html) => {
+  //   const doc = new DOMParser().parseFromString(html, "text/html");
+  //   return doc.body.textContent;
+  // };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/blog`)
+        const res = await axios.get(`http://localhost:4000/api/postBlog/blog`);
         setPosts(res.data);
       } catch (error) {
-          console.log(error);
+        console.log(error);
       }
     };
     fetchData();
@@ -63,14 +69,25 @@ const Menu = () => {
   // ];
   return (
     <>
-      <div className="menu" style={{display:"flex",flexDirection:"column"}}>
-        <h1>Other Post</h1>
-        {posts.map((post) => (
-          <div className="post" key={post.id} style={{display:"flex",flexDirection:"column"}}>
-            <img src="https://images.squarespace-cdn.com/content/v1/6282ec55d5f3c229291fcb47/1674437725718-PQYL45LC1J5G7XX6ZAIM/image-asset.png" alt="hero"></img>
-            <h4>{post.title}</h4>
-            <button className="btn btn-primary">Read more</button>
+      <div
+        className="menu"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        <h1>Other posts you may like</h1>
+        {posts?.map((post) => (
+          <div
+            className="post"
+            key={post.Id}
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            <img style={{borderRadius: "6px"}} src={post?.img} alt="hero"></img>
+            <h4>{post?.title}</h4>
+            <Link to={`/blog/post/${post.Id}`} className="btn btn-primary">
+              Read more
+            </Link>
+            <br></br>
           </div>
+          
         ))}
       </div>
     </>

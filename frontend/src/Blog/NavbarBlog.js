@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const NavbarBlog = () => {
   return (
@@ -62,9 +63,14 @@ const NavbarBlog = () => {
                 </ul>
               </li>
               <li className="nav-item">
-                <a className="nav-link" aria-disabled="true" href="#!">
+                <Link to={`/blog/homepage`} className="nav-link">
                   Blog
-                </a>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={`/blog/write`} className="nav-link">
+                  Write
+                </Link>
               </li>
             </ul>
             <form className="d-flex" role="search">

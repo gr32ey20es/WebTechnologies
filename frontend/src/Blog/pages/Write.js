@@ -1,48 +1,62 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import ReactQuill from 'react-quill';
+// import "frontend/node_modules/react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Write = () => {
   const state = useLocation().state;
-  const [value, setValue] = useState(state?.value || "");
+
+  const [value, setValue] = useState("");
   const [title, setTitle] = useState(state?.title || "");
-  const [file, setFile] = useState(null);
+  const [desc, setDesc] = useState(state?.desc || "");
+  const [imgUrl, setImgUrl] = useState(state?.img || "");
+  // const [file, setFile] = useState(null);
   const [cat, setCat] = useState(state?.cat || "");
+  // const [postId, setPostId] = useState(state?.id || "");
 
-  
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const upload = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await axios.post("/upload", formData);
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    // console.log(state);
+    // console.log(cat);
+    // console.log(postId);
+  });
 
+  // const upload = async () => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("file", file);
+  //     console.log(formData);
+  //     const res = await axios.post("http://localhost:4000/api/upload", formData);
+  //     return res.data;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   const handleClick = async (e) => {
     e.preventDefault();
-    const imgUrl = upload();
+    // const imgUrl = upload();
 
     try {
       state
-        ? await axios.put(`/blog/${state.id}`, {
+        ? await axios.put(`http://localhost:4000/api/postBlog/blog/${state.Id}`,
+            {
+              title,
+              desc,
+              cat,
+              // img: file ?
+              imgUrl
+            }
+          )
+        : await axios.post(`http://localhost:4000/api/postBlog/blog`, {
             title,
-            desc: value,
+            desc,
             cat,
-            img: file ? imgUrl : "",
-          })
-        : await axios.post(`/blog`, {
-            title,
-            desc: value,
-            cat,
-            img: file ? imgUrl : ""
+            // img: file ?
+            imgUrl,
           });
-          navigate("/blog/homepage")
+      navigate("/blog/homepage");
     } catch (error) {
       console.log(error);
     }
@@ -62,12 +76,14 @@ const Write = () => {
               onChange={(e) => setTitle(e.target.value)}
             />
             <div className="container" style={{ marginTop: "10px" }}>
+              {/* <ReactQuill theme="snow" value={value} onChange={setValue} /> */}
               <input
-                style={{ width: "100%", height: "300px" }}
+                className="form-control"
+                style={{ width: "100%", height: "200px" }}
                 type="text"
                 placeholder="Content"
-                value={value}
-                onChange={setValue}
+                value={desc}
+                onChange={(e) => setDesc(e.target.value)}
               />
             </div>
           </div>
@@ -84,25 +100,32 @@ const Write = () => {
               }}
             >
               <h1>Publish</h1>
-              <span>
+              {/* <span>
                 <b>Status: </b>Draft
               </span>
               <br></br>
               <span>
                 <b> Visibility: </b>Public
-              </span>
+              </span> */}
               <br></br>
-              <div className="container">
+              {/* <div className="container">
                 <input
+                  className="form-control"
+                  placeholder="Upload Image"
                   type="file"
                   id="file"
                   onChange={(e) => setFile(e.target.files[0])}
                 />
+              </div> */}
+              <div className="container">
+                <input
+                  className="form-control"
+                  placeholder="Image URL"
+                  value={imgUrl}
+                  onChange={(e) => setImgUrl(e.target.value)}
+                />
               </div>
-              <div className="button">
-                <button>Save as a draft</button>
-                <button onClick={handleClick}>Public</button>
-              </div>
+              
             </div>
             <div
               className="item"
@@ -133,7 +156,7 @@ const Write = () => {
                 id="science"
                 onChange={(e) => setCat(e.target.value)}
               />
-              <label htmlFor="art">SCIENCE</label>
+              <label htmlFor="science">SCIENCE</label>
               <input
                 type="radio"
                 checked={cat === "technology"}
@@ -142,7 +165,7 @@ const Write = () => {
                 id="technology"
                 onChange={(e) => setCat(e.target.value)}
               />
-              <label htmlFor="art">TECHNOLOGY</label>
+              <label htmlFor="technology">TECHNOLOGY</label>
               <input
                 type="radio"
                 checked={cat === "cinema"}
@@ -151,7 +174,7 @@ const Write = () => {
                 id="cinema"
                 onChange={(e) => setCat(e.target.value)}
               />
-              <label htmlFor="art">CINEMA</label>
+              <label htmlFor="cinema">CINEMA</label>
               <input
                 type="radio"
                 checked={cat === "design"}
@@ -160,7 +183,7 @@ const Write = () => {
                 id="design"
                 onChange={(e) => setCat(e.target.value)}
               />
-              <label htmlFor="art">DESIGN</label>
+              <label htmlFor="design">DESIGN</label>
               <input
                 type="radio"
                 checked={cat === "food"}
@@ -169,9 +192,16 @@ const Write = () => {
                 id="food"
                 onChange={(e) => setCat(e.target.value)}
               />
-              <label htmlFor="art">FOOD</label>
+              <label htmlFor="food">FOOD</label>
             </div>
-            <div className="item"></div>
+            <div className="item">
+            <div className="button">
+                {/* <button>Save as a draft</button> */}
+                <button onClick={handleClick} className="btn btn-primary">
+                  Public
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
