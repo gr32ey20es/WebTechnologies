@@ -1,88 +1,74 @@
 import React from "react";
 import banner from "../../course-online/Image/banner.jpg";
+import sub1 from "../Image/sub1.jpg";
+import couresImg from "./CourseImages";
+import { useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, use  } from 'react-router-dom';
 import "./banner.css";
 
+const courseData = [{}];
+for (let i = 0; i < couresImg.length; i++) {
+  courseData[i] = {
+    srcImage: couresImg[i],
+    nameCourse: "hahaha",
+    descriptionCourse: "Khoa hoc lap trinh",
+  };
+}
 
-const tempData = [
-  {
-    src: 'ahhahaha',
-    nameCourse: "hahaha",
-    numerMember: "404043",
-    tag: "khoa hoc online",
-    price: "12982",
-    underPrice: "19238238",
-    discount:"64%"
-  },
-  {
-    src: 'ahhahaha',
-    nameCourse: "hahaha",
-    numerMember: "404043",
-    tag: "khoa hoc online",
-    price: "12982",
-    underPrice: "19238238",
-    discount:"64%"
-  },
-  {
-    src: 'ahhahaha',
-    nameCourse: "hahaha",
-    numerMember: "404043",
-    tag: "khoa hoc online",
-    price: "12982",
-    underPrice: "19238238",
-    discount:"64%"
-  },
-  {
-    src: 'ahhahaha',
-    nameCourse: "hahaha",
-    numerMember: "404043",
-    tag: "khoa hoc online",
-    price: "12982",
-    underPrice: "19238238",
-    discount:"64%"
-  },
-]
+
 
 const CourseContent = () => {
+  const navigate = useNavigate();
+  const handleSelect = (id) => {
+  navigate('/dashboard/courses/:id', {
+    state: {
+      courseID: id,
+    }
+  });
+};
   return (
     <div className="container mt-4">
-      <div class="row justify-content-center align-items-center g-2">
+      {/* <div class="row justify-content-center align-items-center g-2">
         <div class="col">
           <img src={banner} alt="123" style={{ width: "100%" }} />
         </div>
-      </div>
+      </div> */}
 
       <div className="row mt-4">
         <div className="col-12">
-           <h2 className="text-align-start">Khoá học online</h2>  
-        </div>
-        <div className="col-12">
-          <div className="content-details">
-            <p className="text-align-start">
-              Những khoá học tiếng Anh online chất lượng cao của STUDY4 được thiết
-              kế theo chương trình tiếng Anh chuẩn CEFR (A1-C2) của đại học
-              Cambridge và Oxford (Anh) với hệ thống bài giảng, bài tập phong phú
-              đa dạng. Bạn có thể học thử miễn phí trước khi đặt mua sản phẩm.
-            </p>
-          </div>
+          <h2 className="text-align-start">My Courses</h2>
+          <h5 className="text-align-start">Course Overview</h5>
         </div>
       </div>
       <div className="content-wrapper">
-          <h2 className="text-align-start">Combo khoá học đặc biệt:</h2>
-          <div className="row ">
-            {
-              tempData.map((value,index) => (
-                <>
-                <div className="col-4 col-md-4">
-                  <img src={value.src} alt="chua co anh"></img>
-                  <span>{value.nameCourse}</span>
-                  <span>{value.numerMember}</span>
-                  <span>{value.tag}</span>
-                  <span>{value.price}</span>
-            </div>
-                </>
-              ))
-            }
-          </div>
+        <div className="row ">
+          {courseData.map((value, index) => (
+            <>
+              <div className="col-sm-3">
+                <div
+                  className="card"
+                  style={{ width: "18rem", height: "20rem" }}
+                >
+                  <img
+                    src={value.srcImage}
+                    className="card-img-top"
+                    alt=""
+                  ></img>
+                  <div className="card-body">
+                    <h5 className="card-title">{value.nameCourse}</h5>
+                    <p className="card-text">{value.descriptionCourse}</p>
+                    <button
+                      onClick={() => handleSelect(index)}
+                      className="btn btn-primary"
+                    >
+                      Exam
+                </button>
+                  </div>
+                </div>
+              </div>
+            </>
+          ))}
+        </div>
       </div>
     </div>
   );
