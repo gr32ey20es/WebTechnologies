@@ -8,7 +8,7 @@ const TheLogin = () => {
     password: "",
   });
   const [error, setError] = useState(null);
-  const { login,currentUser } = useContext(AuthContext);
+  const { login, currentUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -32,6 +32,8 @@ const TheLogin = () => {
         navigate("/dashboard");
       } else if (currentUser && currentUser.RoleId === 2) {
         navigate("/");
+      } else if (currentUser && currentUser.RoleId === 3) {
+        navigate("/dashboard-teacher");
       }
     } catch (err) {
       setError("Đã xảy ra lỗi khi đăng nhập");

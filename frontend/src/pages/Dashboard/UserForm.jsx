@@ -111,6 +111,7 @@ export default function UserForm({ isClose, userId ,data}) {
   const UserRole = [
     { id: 1, role: "admin" },
     { id: 2, role: "student" },
+    { id: 3, role: "teacher" },
   ];
 
   return (
