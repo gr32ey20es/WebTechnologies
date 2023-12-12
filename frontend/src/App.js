@@ -52,7 +52,7 @@ const router = createBrowserRouter([
       },
       {
         path:"/dashboard/courses",
-        element:<CourseDashboard/>
+        element:<CourseDashboard/>,
         
       },
       {

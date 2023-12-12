@@ -1,26 +1,56 @@
-import React from "react";
 import banner from "../../course-online/Image/banner.jpg";
 import sub1 from "../Image/sub1.jpg";
 import couresImg from "./CourseImages";
 import { useNavigate } from "react-router-dom";
 import { BrowserRouter as Router, Route, Link, use  } from 'react-router-dom';
 import "./banner.css";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const courseData = [{}];
-for (let i = 0; i < couresImg.length; i++) {
-  courseData[i] = {
-    srcImage: couresImg[i],
-    nameCourse: "hahaha",
-    descriptionCourse: "Khoa hoc lap trinh",
-  };
-}
+
+
+
+
+// for (let i = 0; i < couresImg.length; i++) {
+//   console.log(couresImg[i]);
+//   courseData[i] = {
+//     courseID: "it4090",
+//     srcImage: couresImg[i],
+//     nameCourse: "hahaha",
+//     descriptionCourse: "Khoa hoc lap trinh",
+//   };
+// }
 
 
 
 const CourseContent = () => {
+  const [courseData, setCourseData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  //fetch
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/api/courses');
+        console.log(response);
+        setCourseData(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setError('Error fetching data. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array means this effect runs once after the initial render
+
+
+  //Navigate
   const navigate = useNavigate();
   const handleSelect = (id) => {
-  navigate('/dashboard/courses/:id', {
+
+  navigate(`/dashboard/courses/${id}`, {
     state: {
       courseID: id,
     }
@@ -58,7 +88,7 @@ const CourseContent = () => {
                     <h5 className="card-title">{value.nameCourse}</h5>
                     <p className="card-text">{value.descriptionCourse}</p>
                     <button
-                      onClick={() => handleSelect(index)}
+                      onClick={() => handleSelect(value.CourseID)}
                       className="btn btn-primary"
                     >
                       Exam
@@ -73,5 +103,4 @@ const CourseContent = () => {
     </div>
   );
 };
-
 export default CourseContent;
