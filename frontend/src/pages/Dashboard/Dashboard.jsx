@@ -26,12 +26,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import TheNavbar from "../../component/TheNavbar/TheNavnar.jsx";
 
-function createData(UserId, UserName, Email, Password, Role) {
+function createData(UserId, UserName, Email, Password,StudentCode, Role) {
   return {
     UserId,
     UserName,
     Email,
     Password,
+    StudentCode,
     Role,
   };
 }
@@ -83,12 +84,24 @@ const headCells = [
     disablePadding: false,
     label: "Password",
   },
+  {
+    id: "StudentCode",
+    numeric: true,
+    disablePadding: true,
+    label: "StudentCode",
+  },
 
   {
     id: "Role",
     numeric: true,
     disablePadding: false,
     label: "Role",
+  },
+  {
+    id: "Setting",
+    numeric: true,
+    disablePadding: false,
+    label: "Setting",
   },
 ];
 
@@ -259,17 +272,23 @@ export default function Dashboard() {
     try {
       const response = await axios.get("http://localhost:4000/api/users");
       const users = response.data;
-      console.log(users);
-      const newRows = users.map((user) => {
-        return createData(
-          user.UserId,
-          user.UserName,
-          user.Email,
-          user.Password,
-          user.Role
-        );
-      });
+  
+      const newRows = await Promise.all(
+        users.map(async (user) => {
+          const studentCode = await getStudentCode(user.UserId);
+          return createData(
+            user.UserId,
+            user.UserName,
+            user.Email,
+            user.Password,
+            studentCode,
+            user.Role
+          );
+        })
+      );
+  
       setRows(newRows);
+      console.log(newRows);
     } catch (error) {
       console.error(error);
     }
@@ -288,7 +307,20 @@ export default function Dashboard() {
       console.error(error);
     }
   };
-
+  const getStudentCode = async (userId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/api/students/${userId}`
+      );
+      if (response.data && response.data.StudentCode) {
+        return response.data.StudentCode;
+      } else {
+        return "";
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -425,6 +457,7 @@ export default function Dashboard() {
                         </TableCell>
                         <TableCell align="left">{row.Email}</TableCell>
                         <TableCell align="left">{row.Password}</TableCell>
+                        <TableCell align="left">{row.StudentCode}</TableCell>
                         <TableCell align="left">{row.Role}</TableCell>
                         <TableCell>
                           <Button
@@ -457,7 +490,9 @@ export default function Dashboard() {
                               Edit
                             </MenuItem>
                             <MenuItem
-                              onClick={() => deleteUser(selectedUserId)}
+                              onClick={() => {
+                                deleteUser(selectedUserId);
+                              }}
                               disableRipple
                             >
                               <DeleteIcon />

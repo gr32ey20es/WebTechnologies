@@ -5,3 +5,6 @@
 .nav-left {
   border-right: solid 1px rgba(128, 128, 128, 0.5);
 }
+.MuiBox-root{
+  margin:20px 0 20px 20px;
+}

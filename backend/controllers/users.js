@@ -1,6 +1,21 @@
 import db from "../db.js";
 import jwt from "jsonwebtoken";
 
+export const authorize = (req, res, next) => {
+  const token = req.cookies.access_token;
+
+  if (!token) {
+    return res.status(401).json("Not authenticated!");
+  }
+
+  try {
+    const decodedToken = jwt.verify(token, "jwtkey");
+    req.userRole = decodedToken.role;
+    next();
+  } catch (err) {
+    return res.status(403).json("Token is not valid!");
+  }
+};
 // Lấy thông tin của một người dùng bằng ID
 export const getUser = (req, res) => {
   const userId = req.params.userId;

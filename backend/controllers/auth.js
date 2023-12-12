@@ -23,7 +23,6 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body)
   try {
     const query = 'SELECT * FROM users WHERE "Email" = $1';
     const result = await db.query(query, [email]);
