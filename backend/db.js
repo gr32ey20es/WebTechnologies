@@ -2,12 +2,12 @@ import pkg from "pg";
 const { Client } = pkg;
 
 const db = new Client({
-  user: "postgres",
-  host: "localhost",
-  database: "postgres",
-  password: "962002",
+  user: 'kim',
+  host: 'database',
+  database: 'db',
+  password: '2003',
   port: 5432,
-});
+})
 
 await db
   .connect()

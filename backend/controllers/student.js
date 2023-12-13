@@ -5,8 +5,8 @@ import jwt from "jsonwebtoken";
 export const getStudentCode = (req, res) => {
   const userId = req.params.userId;
   db.query(
-    `SELECT "StudentCode" FROM students WHERE students."UserId" = $1 `,
-    [userId],
+    'SELECT "StudentCode" FROM students WHERE "UserId" = $1',
+    [parseInt(userId)],
     (error, results) => {
       if (error) {
         res.status(500).send("Lỗi server");
