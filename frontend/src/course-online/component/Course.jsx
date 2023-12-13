@@ -3,7 +3,6 @@ import sub1 from "../Image/sub1.jpg";
 import couresImg from "./CourseImages";
 import { useNavigate } from "react-router-dom";
 import { BrowserRouter as Router, Route, Link, use  } from 'react-router-dom';
-import "./banner.css";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -66,8 +65,7 @@ const CourseContent = () => {
 
       <div className="row mt-4">
         <div className="col-12">
-          <h2 className="text-align-start">My Courses</h2>
-          <h5 className="text-align-start">Course Overview</h5>
+          <h2 className="text-align-start">Khóa học của tôi</h2>
         </div>
       </div>
       <div className="content-wrapper">
@@ -85,8 +83,8 @@ const CourseContent = () => {
                     alt=""
                   ></img>
                   <div className="card-body">
-                    <h5 className="card-title">{value.nameCourse}</h5>
-                    <p className="card-text">{value.descriptionCourse}</p>
+                    <h5 className="card-title">{value.CourseName}</h5>
+                    {/* <p className="card-text">{value.CourseDescription}</p> */}
                     <button
                       onClick={() => handleSelect(value.CourseID)}
                       className="btn btn-primary"

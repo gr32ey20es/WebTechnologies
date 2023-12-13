@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-
+import CourseExamContent from './CourseExam';
 const CourseDetail = ({ match }) => {
   const location = useLocation();
   console.log(location);
@@ -51,9 +51,7 @@ const CourseDetail = ({ match }) => {
 
   return (
     <div>
-      {/* Render your component using the courseData */}
-      <h1>{courseData.title}</h1>
-      {/* Other course details */}
+      <CourseExamContent/>
     </div>
   );
 };

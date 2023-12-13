@@ -3,6 +3,7 @@ import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
 import courseRoute from "./routes/course.js";
 import studentCoursesRoute from "./routes/studentCourses.js";
+import imagesRoute from "./routes/images.js";
 import cors from 'cors'
 const app = express();
 app.use(express.json());
