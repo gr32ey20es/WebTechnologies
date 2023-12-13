@@ -1,7 +1,7 @@
 import db from "../db.js";
 export const getAllCourses = async(req,res)=>{
     try{
-        const results = await db.query('SELECT * FROM courses');
+        const results = await db.query('SELECT courses."CourseID",courses."CourseName",courses."CourseDescription",image_courses."ImagePath" FROM courses JOIN image_courses ON courses."CourseID" = image_courses."CourseID"');
         res.json(results.rows);
     }
     catch(error){

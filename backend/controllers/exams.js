@@ -1,8 +1,8 @@
 import db from "../db.js";
-export const getImagePathByCourseID = async (req,res)=>{
+export const getExamsByCourseID = async (req,res)=>{
     const  courseID  = req.params.id;
     try{
-        const results = await db.query('SELECT "ImagePath" FROM image_courses WHERE "CourseID" = $1',[courseID]);
+        const results = await db.query('SELECT * FROM exams WHERE "CourseID" = $1',[courseID]);
         res.json(results.rows);
     }
     catch(error){

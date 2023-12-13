@@ -1,26 +1,7 @@
-import banner from "../../course-online/Image/banner.jpg";
-import sub1 from "../Image/sub1.jpg";
-import couresImg from "./CourseImages";
 import { useNavigate } from "react-router-dom";
 import { BrowserRouter as Router, Route, Link, use  } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
-
-
-
-
-// for (let i = 0; i < couresImg.length; i++) {
-//   console.log(couresImg[i]);
-//   courseData[i] = {
-//     courseID: "it4090",
-//     srcImage: couresImg[i],
-//     nameCourse: "hahaha",
-//     descriptionCourse: "Khoa hoc lap trinh",
-//   };
-// }
-
-
 
 const CourseContent = () => {
   const [courseData, setCourseData] = useState([]);
@@ -31,8 +12,8 @@ const CourseContent = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:4000/api/courses');
-        console.log(response);
         setCourseData(response.data);
+        console.log(courseData);
       } catch (error) {
         console.error('Error fetching data:', error);
         setError('Error fetching data. Please try again.');
@@ -72,14 +53,14 @@ const CourseContent = () => {
         <div className="row ">
           {courseData.map((value, index) => (
             <>
-              <div className="col-sm-3">
+              <div className="col-sm-3 p-3">
                 <div
                   className="card"
                   style={{ width: "18rem", height: "20rem" }}
                 >
                   <img
-                    src={value.srcImage}
-                    className="card-img-top"
+                    src={value.ImagePath}
+                    className="card-img-top" style={{height:'143px'}}
                     alt=""
                   ></img>
                   <div className="card-body">

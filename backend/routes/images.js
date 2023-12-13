@@ -1,8 +1,6 @@
 import express from "express";
-import {
-     getImageByCourseID
-} from "../controllers/images";
-
+import { getImagePathByCourseID } from "../controllers/images.js"
 const router = express.Router();
-router.get("/:id",getImageByCourseID);
+
+router.get("/:id",getImagePathByCourseID);
 export default router;
