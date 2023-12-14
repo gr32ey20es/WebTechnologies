@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 import CourseExamContent from './CourseExam';
 import axios from 'axios';
 const CourseDetail = ({ match }) => {
@@ -55,6 +55,16 @@ const CourseDetail = ({ match }) => {
     };
     fetchData();
   }, []);
+  //
+  const navigate = useNavigate();
+  const handleSelect = (id) => {
+
+  navigate(`/dashboard/exam`, {
+    state: {
+      examID: id,
+    }
+  });
+};
   // Render your component using the courseData
 
   return (
@@ -90,6 +100,7 @@ const CourseDetail = ({ match }) => {
                       <h5 className="card-title">{value.ExamName}</h5>
                       <p className="card-text"></p>
                       <button
+                        onClick={() => handleSelect(value.ExamID)}
                         className="btn btn-primary"
                       >
                         Enter Exam

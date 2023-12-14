@@ -14,6 +14,7 @@ import {
   Outlet,
 } from "react-router-dom";
 import CourseDetail from "./course-online/component/CourseDetail.jsx";
+import CourseExamContent from "./course-online/component/CourseExam.jsx";
 
 
 const Layout = () => {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path:"/dashboard/courses/:id",
         element:<CourseDetail/>
+      },
+      {
+        path:"/dashboard/exam/",
+        element:<CourseExamContent/>
       }
 
     ],
