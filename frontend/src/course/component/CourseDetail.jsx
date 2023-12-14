@@ -44,7 +44,7 @@ const CourseDetail = ({ match }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios(`http://localhost:4000/api/exam/${courseID}`);
+        const response = await axios(`http://localhost:4000/api/exams/${courseID}`);
         setExamData(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);

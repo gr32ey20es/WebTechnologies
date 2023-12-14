@@ -48,7 +48,7 @@ const addExam = (req, res) => {
 
 const getAllExam = (req, res) => {
 	db.query(
-		'SELECT id, title FROM exams',
+		'SELECT ExamID, title FROM exams',
 		(error, results) => {
 			if (error) {
 				console.error(error);
@@ -74,15 +74,17 @@ function joinv2(data) {
 }
 
 const getExam = (req, res) => {
-		db.query(
-		'SELECT id, title, questions FROM exams WHERE id=$1',
-		[req.params.examId],
+	console.log(req.params)
+	db.query(
+		'SELECT * FROM exams WHERE "CourseID" = $1',
+		[req.params.courseID],
 		(error, results) => {
 			if (error) {
 				console.error(error);
 				res.status(500).send('Lỗi server');
 			} else {
-				res.json(joinv2(results.rows[0]));
+				res.json(results.rows)
+				// res.json(joinv2(results.rows[0]));
 			}
 		}
 	);
@@ -90,7 +92,7 @@ const getExam = (req, res) => {
 
 const getEditExam = (req, res) => {
 	db.query(
-		'SELECT id, title, questions, answers FROM exams WHERE id=$1',
+		'SELECT ExamID, title, questions, answers FROM exams WHERE ExamID=$1',
 		[req.params.examId],
 		(error, results) => {
 			if (error) {
@@ -105,7 +107,7 @@ const getEditExam = (req, res) => {
 
 const editExam = (req, res) => {
 	db.query(
-		'UPDATE exams SET title=$1, questions=$2, answers=$3 WHERE id=$4',
+		'UPDATE exams SET title=$1, questions=$2, answers=$3 WHERE ExamID=$4',
 		[...separate(req.body.exam) ,req.params.examId],
 		(error, results) => {
 			if (error) {

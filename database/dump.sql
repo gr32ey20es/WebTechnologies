@@ -61,26 +61,34 @@ CREATE TABLE "public"."enrollments" (
 
 
 DROP TABLE IF EXISTS "exams";
+DROP SEQUENCE IF EXISTS exams_id_seq;
+
+CREATE SEQUENCE exams_id_seq INCREMENT 1 MINVALUE 2 MAXVALUE 2147483647 CACHE 1;
 CREATE TABLE "public"."exams" (
-    "ExamID" integer NOT NULL,
+    "ExamID" integer DEFAULT nextval('exams_id_seq') NOT NULL,
     "CourseID" character varying(45) NOT NULL,
-    "ExamName" character varying,
+    "title" character(39) NOT NULL,
+    "questions" json NOT NULL,
+    "answers" json NOT NULL,
     CONSTRAINT "exams_ExamID" PRIMARY KEY ("ExamID")
 ) WITH (oids = false);
 
-INSERT INTO "exams" ("ExamID", "CourseID", "ExamName") VALUES
-(1,	'it0001',	'Đề thi số 1'),
-(2,	'it0001',	'Đề thi số 2'),
-(3,	'it0001',	'Đề thi số 3'),
-(4,	'it0002',	'Đề thi số 1'),
-(5,	'it0003',	'Đề thi số 1'),
-(6,	'it0004',	'Đề thi số 1'),
-(7,	'it0005',	'Đề thi số 1'),
-(8,	'it0006',	'Đề thi số 1'),
-(9,	'it0007',	'Đề thi số 1'),
-(10,	'it0008',	'Đề thi số 1'),
-(11,	'it0009',	'Đề thi số 1'),
-(12,	'it0010',	'Đề thi số 1');
+
+INSERT INTO "exams" ("ExamID", "CourseID", "title", "questions", "answers") VALUES
+(1,	'it0001',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(2,	'it0001',	'Đề thi số 2',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(3,	'it0001',	'Đề thi số 3',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(4,	'it0002',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(5,	'it0003',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(6,	'it0004',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(7,	'it0005',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(8,	'it0006',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(9,	'it0007',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(10,	'it0008',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(11,	'it0009',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(12,	'it0010',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}');
+
+SELECT setval('exams_id_seq', (SELECT MAX("ExamID") FROM exams));
 
 DROP TABLE IF EXISTS "image_courses";
 CREATE TABLE "public"."image_courses" (
@@ -160,25 +168,3 @@ ALTER TABLE ONLY "public"."students" ADD CONSTRAINT "students_UserID_fkey" FOREI
 ALTER TABLE ONLY "public"."users" ADD CONSTRAINT "roleId" FOREIGN KEY ("RoleId") REFERENCES roles("RoleId") NOT DEFERRABLE;
 
 -- 2023-12-13 19:40:21.007224+00
-
--- Adminer 4.8.1 PostgreSQL 16.1 (Debian 16.1-1.pgdg120+1) dump
-
-DROP TABLE IF EXISTS "exams";
-DROP SEQUENCE IF EXISTS exams_id_seq;
-CREATE SEQUENCE exams_id_seq INCREMENT 1 MINVALUE 2 MAXVALUE 2147483647 CACHE 1;
-
-CREATE TABLE "public"."exams" (
-    "id" integer DEFAULT nextval('exams_id_seq') NOT NULL,
-    "title" character(39) NOT NULL,
-    "questions" json NOT NULL,
-    "answers" json NOT NULL,
-    CONSTRAINT "exams_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-TRUNCATE "exams";
-INSERT INTO "exams" ("id", "title", "questions", "answers") VALUES
-(1,	'Bai kiem tra',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}');
-
-SELECT setval('exams_id_seq', (SELECT MAX(id) FROM exams));
-
--- 2023-11-18 02:05:04.475095+00
