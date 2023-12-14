@@ -45,6 +45,8 @@ export const addStudentCode = (req, res) => {
 export const editStudentCode = (req, res) => {
   const userId = req.params.userId;
   const { studentCode } = req.body;
+  console.log("studentCode: ");
+  console.log(studentCode);
 
   // Kiểm tra xem mã sinh viên đã tồn tại hay chưa
   db.query(
@@ -67,21 +69,42 @@ export const editStudentCode = (req, res) => {
                 console.error(error);
                 res.status(500).send("Lỗi server");
               } else {
-                res.send(`Sinh viên đã được sửa mã sinh viên là ${userId} thành công`);
+                res.send(
+                  `Sinh viên đã được sửa mã sinh viên là ${userId} thành công`
+                );
               }
             }
           );
         } else {
-          // Mã sinh viên không tồn tại, tiến hành chèn bản ghi mới vào bảng students
+          // Lấy giá trị StudentID lớn nhất từ bảng students
           db.query(
-            'INSERT INTO students ("UserId", "StudentCode") VALUES ($1, $2)',
-            [userId, studentCode],
+            'SELECT "StudentID" FROM students ORDER BY "StudentID" DESC LIMIT 1',
             (error, results) => {
               if (error) {
                 console.error(error);
                 res.status(500).send("Lỗi server");
               } else {
-                res.send(`Sinh viên có mã sinh viên là ${studentCode} đã được thêm thành công`);
+                const maxStudentId = results.rows.length > 0 ? results.rows[0].StudentID : 0;
+                const newStudentId = maxStudentId + 1;
+                console.log("newStudentId: ");
+                console.log(newStudentId);
+                // Thêm bản ghi mới vào bảng students
+                db.query(
+                  'INSERT INTO students ("StudentID", "UserId", "StudentCode") VALUES ($1, $2, $3)',
+                  [newStudentId, userId, studentCode],
+                  (error, results) => {
+                    if (error) {
+                      console.error(error);
+                      res.status(500).send("Lỗi server");
+                    } else {
+                      console.log(results);
+
+                      res.send(
+                        `Sinh viên có mã sinh viên là ${studentCode} đã được thêm thành công`
+                      );
+                    }
+                  }
+                );
               }
             }
           );
