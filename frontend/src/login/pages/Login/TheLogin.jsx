@@ -31,7 +31,7 @@ const TheLogin = () => {
       if (currentUser && currentUser.RoleId === 1) {
         navigate("/dashboard");
       } else if (currentUser && currentUser.RoleId === 2) {
-        navigate("/");
+        navigate("/courses/online");
       } else if (currentUser && currentUser.RoleId === 3) {
         navigate("/dashboard-teacher");
       }
