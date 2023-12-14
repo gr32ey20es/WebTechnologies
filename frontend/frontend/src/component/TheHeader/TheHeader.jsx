@@ -23,25 +23,13 @@ function TheHeader() {
       </div>
       <div className="header-right">
         <ul class="nav">
-          <a class="nav-link" href="/courses/online/">
-            Khoá học online
+          <a class="nav-link" href="/courses/">
+            Khoá học
           </a>
 
-          <a class="nav-link" href="/tests/">
-            Đề thi online
-          </a>
-
-          <a class="nav-link" href="/flashcards/">
-            Flashcards
-          </a>
           <a class="nav-link" href="/posts/">
             Blog
           </a>
-
-          <a class="nav-link" href="/courses/activate/">
-            Kích hoạt khoá học
-          </a>
-
         
           <span>
             <Link to="/info">{currentUser?.UserName}</Link>

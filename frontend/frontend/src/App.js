@@ -52,6 +52,7 @@ function App() {
   const isAdminOrTeacher =
     currentUser && (currentUser.RoleId === 1 || currentUser.RoleId === 3);
 
+  console.log(isAdminOrTeacher)
   return (
     <div className="App">
       <Router>
