@@ -21,7 +21,7 @@ function TheRegister() {
     e.preventDefault();
     try {
       console.log(inputs);
-      await axios.post("http://localhost:4000/api/auth/register", inputs);
+      await axios.post("http://localhost:8800/api/auth/register", inputs);
       navigate("/login");
     } catch (err) {
       setError(err.response.data);

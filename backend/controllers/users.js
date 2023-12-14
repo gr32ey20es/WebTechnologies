@@ -61,22 +61,32 @@ export const getAllUser = (req, res) => {
 // Thêm một người dùng mới
 export const addUser = (req, res) => {
   const { username, email, password, role } = req.body;
-  // Thực hiện truy vấn hoặc xử lý để thêm người dùng vào cơ sở dữ liệu
-  // Ví dụ:
-  db.query(
-    'INSERT INTO users ("UserName", "Email", "Password", "RoleId") VALUES ($1, $2, $3, $4)',
-    [username, email, password, role],
-    (error, results) => {
-      if (error) {
-        console.error(error);
-        res.status(500).send('Lỗi server');
-      } else {
-        res.send('Người dùng đã được thêm thành công');
-      }
+  
+  // Lấy giá trị UserId lớn nhất trong bảng users
+  db.query('SELECT MAX("UserId") AS maxUserId FROM users', (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Lỗi server');
+    } else {
+      const maxUserId = results.rows[0].maxuserid;
+      const newUserId = parseInt(maxUserId) + 1;
+      console.log("newUserId: ");
+      // Thực hiện truy vấn hoặc xử lý để thêm người dùng vào cơ sở dữ liệu
+      db.query(
+        'INSERT INTO users ("UserId", "UserName", "Email", "Password", "RoleId") VALUES ($1, $2, $3, $4, $5)',
+        [newUserId, username, email, password, role],
+        (error, results) => {
+          if (error) {
+            console.error(error);
+            res.status(500).send('Lỗi server');
+          } else {
+            res.send(`Người dùng đã được thêm thành công. UserId: ${newUserId}`);
+          }
+        }
+      );
     }
-  );
+  });
 };
-
 // Chỉnh sửa thông tin người dùng
 export const editUser = (req, res) => {
   const userId = req.params.userId;

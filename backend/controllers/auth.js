@@ -3,16 +3,21 @@ import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
   // CHECK EXISTING USER
-  const selectQuery = 'SELECT * FROM users WHERE "Email" = $1 OR "UserName" = $2';
+  const selectQuery =
+    'SELECT * FROM users WHERE "Email" = $1 OR "UserName" = $2';
   try {
-    const selectResult = await db.query(selectQuery, [req.body.email, req.body.username]);
+    const selectResult = await db.query(selectQuery, [
+      req.body.email,
+      req.body.username,
+    ]);
     if (selectResult.rows.length) {
       return res.status(409).json("User already exists!");
     }
 
-    const insertQuery = 'INSERT INTO users ("UserName", "Email", "Password") VALUES ($1, $2, $3)';
+    const insertQuery =
+      'INSERT INTO users ("UserName", "Email", "Password") VALUES ($1, $2, $3)';
     const values = [req.body.username, req.body.email, req.body.password];
-    
+
     await db.query(insertQuery, values);
     return res.status(201).json("User has been created.");
   } catch (error) {
@@ -23,12 +28,15 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email);
+  console.log(password);
+
   try {
     const query = 'SELECT * FROM users WHERE "Email" = $1';
     const result = await db.query(query, [email]);
 
     const data = result.rows;
-
+    console.log(data);
     if (data.length === 0) {
       return res.status(404).json({ message: "User not found!" });
     }

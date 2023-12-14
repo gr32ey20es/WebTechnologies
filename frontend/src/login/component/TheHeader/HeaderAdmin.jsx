@@ -5,8 +5,9 @@ import { AuthContext } from "../../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import Button from "@mui/material/Button";
+import Chip from '@mui/material/Chip';
 
-function TheHeader() {
+function HeaderAdmin() {
   const navigate = useNavigate();
 
   const { currentUser, logout } = useContext(AuthContext);
@@ -14,6 +15,14 @@ function TheHeader() {
     logout();
     navigate("/"); // Redirect to "/" after logout
   };
+
+  let roleLabel = '';
+  if (currentUser && currentUser.RoleId === 1) {
+    roleLabel = 'Admin';
+  } else if (currentUser && currentUser.RoleId === 3) {
+    roleLabel = 'Teacher';
+  }
+
   return (
     <div className="header">
       <div className="header-left">
@@ -23,34 +32,12 @@ function TheHeader() {
       </div>
       <div className="header-right">
         <ul className="nav">
-          {currentUser && currentUser.RoleId === 1 ? 
-          <a className="nav-link" href="/dashboard-admin">
-            Dashboard
-          </a> : null}
-          <a className="nav-link" href="/courses/">
-            Khoá học
-          </a>
-
-          <a className="nav-link" href="/posts/">
-            Blog
-          </a>
-        
-          <span>
-            <Link to="/info">{currentUser?.UserName}</Link>
-          </span>
-          {currentUser ? (
+          <Link to="/info">{currentUser?.UserName}</Link>
+          {roleLabel && <Chip label={roleLabel} />}
+          {currentUser && (
             <Link to="/" onClick={handleLogout}>
               <Button variant="contained">Logout</Button>
             </Link>
-          ) : (
-            <span className="content">
-              <Link to="/login">
-                <Button variant="contained">Login</Button>
-              </Link>
-              <Link to="/register">
-                <Button variant="contained">Register</Button>
-              </Link>
-            </span>
           )}
         </ul>
       </div>
@@ -58,4 +45,4 @@ function TheHeader() {
   );
 }
 
-export default TheHeader;
+export default HeaderAdmin;
