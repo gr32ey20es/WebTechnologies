@@ -54,7 +54,7 @@ const Home = () => {
   return (
     <>
       <div className="container">
-        <h1>Content</h1>
+        <h1>Các bài viết</h1>
         {posts?.map((post) => (
           <div
             className="card"
