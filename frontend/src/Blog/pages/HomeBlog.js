@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Footer from "../../homepage/Footer/Footer";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Home = () => {
+const HomeBlog = () => {
   const [posts, setPosts] = useState([]);
 
   const getText = (html) => {
@@ -80,9 +79,8 @@ const Home = () => {
           </div>
         ))}
       </div>
-      <Footer />
     </>
   );
 };
 
-export default Home;
+export default HomeBlog;

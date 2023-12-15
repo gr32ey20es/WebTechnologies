@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Menu from "./Menu";
 import axios from "axios";
 import { useContext } from "react";
-import { AuthContext } from "../../login/context/authContext";
+import MenuBlog from "./MenuBlog";
+// import { AuthContext } from "../../login/context/authContext";
 
-const Single = () => {
+const SingleBlog = () => {
   const [post, setPost] = useState([]);
 
   const location = useLocation();
@@ -13,7 +13,7 @@ const Single = () => {
   const postId = location.pathname.split("/")[3];
   const navigate = useNavigate();
 
-  const { currentUser } = useContext(AuthContext);
+  // const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     // console.log(postId);
@@ -123,7 +123,7 @@ const Single = () => {
           </div>
 
           <div className="col-3">
-            <Menu />
+            <MenuBlog />
           </div>
         </div>
       </div>
@@ -131,4 +131,4 @@ const Single = () => {
   );
 };
 
-export default Single;
+export default SingleBlog;

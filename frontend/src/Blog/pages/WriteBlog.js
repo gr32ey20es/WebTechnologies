@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const Write = () => {
+const WriteBlog = () => {
   const state = useLocation().state;
 
   const [value, setValue] = useState("");
@@ -209,4 +209,4 @@ const Write = () => {
   );
 };
 
-export default Write;
+export default WriteBlog;

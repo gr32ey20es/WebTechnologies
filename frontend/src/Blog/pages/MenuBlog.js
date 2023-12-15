@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Menu = () => {
+const MenuBlog = () => {
   const [posts, setPosts] = useState([]);
 
   // const getText = (html) => {
@@ -94,4 +94,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default MenuBlog;
