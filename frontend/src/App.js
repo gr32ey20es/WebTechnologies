@@ -55,9 +55,9 @@ function App() {
           path="/dashboard-teacher"
           element={<PrivateRouteTeacher element={Dashboard} />}
         />
-        <Route path="/blog/homepage" element={HomeBlog} />
-        <Route path="/blog/post/:id" element={SingleBlog} />
-        <Route path="/blog/write" element={WriteBlog} />
+        <Route path="/blog/homepage" element={<HomeBlog />} />
+        <Route path="/blog/post/:id" element={<SingleBlog />} />
+        <Route path="/blog/write" element={<WriteBlog />} />
       </Routes>
     </Router>
   );
