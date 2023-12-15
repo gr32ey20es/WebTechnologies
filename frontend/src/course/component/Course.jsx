@@ -58,8 +58,14 @@ const CourseContent = () => {
                   className="card"
                   style={{ width: "18rem", height: "20rem" }}
                 >
-                  <img
+                  {/* <img
                     src={value.ImagePath}
+                    className="card-img-top" style={{height:'143px'}}
+                    alt=""
+                  ></img> */}
+
+                  <img
+                    src={require('../Image/sub1.jpg')}
                     className="card-img-top" style={{height:'143px'}}
                     alt=""
                   ></img>
