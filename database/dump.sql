@@ -140,7 +140,7 @@ CREATE SEQUENCE "users_UserId_seq" AS integer
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;;
+    CACHE 1;
 
 CREATE TABLE "public"."users" (
     "UserId" integer DEFAULT nextval('"users_UserId_seq"') NOT NULL,

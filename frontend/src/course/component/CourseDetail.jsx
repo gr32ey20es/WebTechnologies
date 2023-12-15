@@ -91,11 +91,16 @@ const CourseDetail = ({ match }) => {
                     className="card"
                     style={{ width: "18rem", height: "20rem" }}
                   >
-                    <img
+                    {/* <img
                       src={imageData[0].ImagePath}
                       className="card-img-top"
                       alt=""
-                    ></img>
+                    ></img> */}
+                  <img
+                    src={require('../Image/sub1.jpg')}
+                    className="card-img-top" style={{height:'143px'}}
+                    alt=""
+                  ></img>
                     <div className="card-body">
                       <h5 className="card-title">{value.ExamName}</h5>
                       <p className="card-text"></p>
