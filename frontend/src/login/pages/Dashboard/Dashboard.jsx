@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import "./Dashboard.css";
 import axios from "axios";
 import UserForm from "./UserForm.jsx";
 import PropTypes from "prop-types";
@@ -24,13 +24,15 @@ import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import TheNavbar from "../../component/TheNavbar/TheNavnar.jsx";
 
-function createData(UserId, UserName, Email, Password, Role) {
+function createData(UserId, UserName, Email, Password,StudentCode, Role) {
   return {
     UserId,
     UserName,
     Email,
     Password,
+    StudentCode,
     Role,
   };
 }
@@ -82,12 +84,24 @@ const headCells = [
     disablePadding: false,
     label: "Password",
   },
+  {
+    id: "StudentCode",
+    numeric: true,
+    disablePadding: true,
+    label: "StudentCode",
+  },
 
   {
     id: "Role",
     numeric: true,
     disablePadding: false,
     label: "Role",
+  },
+  {
+    id: "Setting",
+    numeric: true,
+    disablePadding: false,
+    label: "Setting",
   },
 ];
 
@@ -226,7 +240,7 @@ export default function Dashboard() {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
-  const [selectedUserId, setSelectedUserId] = React.useState("");
+  const [selectedUserId, setSelectedUserId] = React.useState(null);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [users, setUsers] = useState([]);
@@ -241,31 +255,40 @@ export default function Dashboard() {
   };
   const onCloseForm = () => {
     setOpenForm(false);
+    setSelectedUserId(null);
   };
 
   const handleClickMenu = (event, userId) => {
-    setSelectedUserId(userId)
-    console.log(selectedUserId)
+    setSelectedUserId(userId);
+    console.log(selectedUserId);
     event.preventDefault();
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+    setSelectedUserId(null);
   };
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:8800/api/users");
+      const response = await axios.get("http://localhost:4000/api/users");
       const users = response.data;
-      const newRows = users.map((user) => {
-        return createData(
-          user.UserId,
-          user.UserName,
-          user.Email,
-          user.Password,
-          user.Role
-        );
-      });
+  
+      const newRows = await Promise.all(
+        users.map(async (user) => {
+          const studentCode = await getStudentCode(user.UserId);
+          return createData(
+            user.UserId,
+            user.UserName,
+            user.Email,
+            user.Password,
+            studentCode,
+            user.Role
+          );
+        })
+      );
+  
       setRows(newRows);
+      console.log(newRows);
     } catch (error) {
       console.error(error);
     }
@@ -276,17 +299,28 @@ export default function Dashboard() {
   const deleteUser = async (userId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8800/api/users/${userId}`
+        `http://localhost:4000/api/users/${userId}`
       );
       console.log(response.data);
       fetchUsers();
-
     } catch (error) {
       console.error(error);
     }
   };
-
-
+  const getStudentCode = async (userId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/api/students/${userId}`
+      );
+      if (response.data && response.data.StudentCode) {
+        return response.data.StudentCode;
+      } else {
+        return "";
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -345,117 +379,150 @@ export default function Dashboard() {
     [order, orderBy, page, rowsPerPage, rows]
   );
   return (
-    <div>
-      {openForm && <UserForm onOpen={openForm} data = {fetchUsers}   isClose={onCloseForm}  userId={selectedUserId}  ></UserForm>}
+    <div style={{ margin: " 0 24px" }}>
+      {openForm && (
+        <UserForm
+          onOpen={openForm}
+          data={fetchUsers}
+          isClose={onCloseForm}
+          userId={selectedUserId}
+        ></UserForm>
+      )}
+      <div className="dashboard-container">
+        <div className="nav-left">
+          <TheNavbar />
+        </div>
+        <Box sx={{ width: "100%" }}>
+          <Paper sx={{ width: "100%", mb: 2 }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <EnhancedTableToolbar numSelected={selected.length} />
+              <Button
+                id="demo-customized-button"
+                aria-haspopup="true"
+                variant="contained"
+                disableElevation
+                onClick={onShowForm}
+              >
+                Thêm
+              </Button>
+            </div>
+            <TableContainer>
+              <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                <EnhancedTableHead
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onSelectAllClick={handleSelectAllClick}
+                  onRequestSort={handleRequestSort}
+                  rowCount={rows.length}
+                />
+                <TableBody>
+                  {visibleRows.map((row, index) => {
+                    const isItemSelected = isSelected(row.UserId);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-      <Box sx={{ width: "100%" }}>
-        <Paper sx={{ width: "100%", mb: 2 }}>
-          <EnhancedTableToolbar numSelected={selected.length} />
-          <TableContainer>
-            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-              <EnhancedTableHead
-                numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
-                onSelectAllClick={handleSelectAllClick}
-                onRequestSort={handleRequestSort}
-                rowCount={rows.length}
-              />
-              <TableBody>
-                {visibleRows.map((row, index) => {
-                  const isItemSelected = isSelected(row.UserId);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.UserId}
-                      selected={isItemSelected}
-                      sx={{ cursor: "pointer" }}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          onClick={(event) => handleClick(event, row.UserId)}
-                          checked={isItemSelected}
-                          inputProps={{
-                            "aria-labelledby": labelId,
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                        
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row.UserId}
+                        selected={isItemSelected}
+                        sx={{ cursor: "pointer" }}
                       >
-                        {row.UserName}
-                      </TableCell>
-                      <TableCell align="left">{row.Email}</TableCell>
-                      <TableCell align="left">{row.Password}</TableCell>
-                      <TableCell align="left">{row.Role}</TableCell>
-                      <TableCell>
-                        <Button
-                          id="demo-customized-button"
-                          aria-controls={
-                            open ? "demo-customized-menu" : undefined
-                          }
-                          aria-haspopup="true"
-                          aria-expanded={open ? "true" : undefined}
-                          variant="contained"
-                          disableElevation
-                          onClick={(event) =>
-                            handleClickMenu(event, row.UserId)
-                          }
-                          endIcon={<KeyboardArrowDownIcon />}
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            color="primary"
+                            onClick={(event) => handleClick(event, row.UserId)}
+                            checked={isItemSelected}
+                            inputProps={{
+                              "aria-labelledby": labelId,
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="none"
                         >
-                          Options
-                        </Button>
-                        <StyledMenu
-                          id="demo-customized-menu"
-                          MenuListProps={{
-                            "aria-labelledby": "demo-customized-button",
-                          }}
-                          anchorEl={anchorEl}
-                          open={open}
-                          onClose={handleClose}
-                        >
-                          <MenuItem  onClick={onShowForm} disableRipple>
-                            <EditIcon  />
-                            Edit
-                          </MenuItem>
-                          <MenuItem onClick={() => deleteUser(selectedUserId)} disableRipple>
-                            <DeleteIcon />
-                            Delete
-                          </MenuItem>
-                        </StyledMenu>
-                      </TableCell>
+                          {row.UserName}
+                        </TableCell>
+                        <TableCell align="left">{row.Email}</TableCell>
+                        <TableCell align="left">{row.Password}</TableCell>
+                        <TableCell align="left">{row.StudentCode}</TableCell>
+                        <TableCell align="left">{row.Role}</TableCell>
+                        <TableCell>
+                          <Button
+                            id="demo-customized-button"
+                            aria-controls={
+                              open ? "demo-customized-menu" : undefined
+                            }
+                            aria-haspopup="true"
+                            aria-expanded={open ? "true" : undefined}
+                            variant="contained"
+                            disableElevation
+                            onClick={(event) =>
+                              handleClickMenu(event, row.UserId)
+                            }
+                            endIcon={<KeyboardArrowDownIcon />}
+                          >
+                            Options
+                          </Button>
+                          <StyledMenu
+                            id="demo-customized-menu"
+                            MenuListProps={{
+                              "aria-labelledby": "demo-customized-button",
+                            }}
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                          >
+                            <MenuItem onClick={onShowForm} disableRipple>
+                              <EditIcon />
+                              Edit
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => {
+                                deleteUser(selectedUserId);
+                              }}
+                              disableRipple
+                            >
+                              <DeleteIcon />
+                              Delete
+                            </MenuItem>
+                          </StyledMenu>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                  {emptyRows > 0 && (
+                    <TableRow>
+                      <TableCell colSpan={6} />
                     </TableRow>
-                  );
-                })}
-                {emptyRows > 0 && (
-                  <TableRow>
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Paper>
-      </Box>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </Box>
+      </div>
     </div>
   );
 }

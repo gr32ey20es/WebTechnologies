@@ -1,0 +1,15 @@
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.column {
+    flex-direction: column;
+}
+.pointer {
+    cursor: pointer;
+}
+.pointer:hover {
+    border-radius: 6px;
+    background-color: #d3d3d370;
+}

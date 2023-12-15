@@ -2,14 +2,13 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./TheLogin.css";
 import { AuthContext } from "../../context/authContext";
-import axios from "axios";
-
 const TheLogin = () => {
   const [inputs, setInputs] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const [error, setError] = useState(null);
+  const { login, currentUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -23,20 +22,13 @@ const TheLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!inputs.username || !inputs.password) {
+    if (!inputs.email || !inputs.password) {
       setError("Vui lòng nhập tên người dùng và mật khẩu");
       return;
     }
-
     try {
-      console.log(inputs);
-
-       await axios.post("http://localhost:4000/api/auth/login",inputs );
-
-      // Lưu thông tin người dùng vào context
-
+      await login(inputs);
       navigate("/");
-      alert("Đăng nhập thành công");
     } catch (err) {
       setError("Đã xảy ra lỗi khi đăng nhập");
     }
@@ -52,11 +44,11 @@ const TheLogin = () => {
           </div>
           <div className="login-form">
             <div className="form-group">
-              <label htmlFor="username">Tài khoản:</label>
+              <label htmlFor="email">Tài khoản:</label>
               <input
                 type="text"
-                id="username"
-                name="username"
+                id="email"
+                name="email"
                 placeholder="Nhập tài khoản"
                 onChange={handleChange}
               />

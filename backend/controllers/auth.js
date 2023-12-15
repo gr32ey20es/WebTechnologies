@@ -1,46 +1,64 @@
 import db from "../db.js";
 import jwt from "jsonwebtoken";
 
-export const register = (req, res) => {
+export const register = async (req, res) => {
   // CHECK EXISTING USER
-  const selectQuery = "SELECT * FROM users WHERE Email = ? OR UserName = ?";
-  db.query(selectQuery, [req.body.email, req.body.username], (err, data) => {
-    if (err) return res.status(500).json(err);
-    if (data.length) return res.status(409).json("User already exists!");
+  const selectQuery =
+    'SELECT * FROM users WHERE "Email" = $1 OR "UserName" = $2';
+  try {
+    const selectResult = await db.query(selectQuery, [
+      req.body.email,
+      req.body.username,
+    ]);
+    if (selectResult.rows.length) {
+      return res.status(409).json("User already exists!");
+    }
 
     const insertQuery =
-      "INSERT INTO users (`UserName`, `Email`, `Password`) VALUES (?)";
+      'INSERT INTO users ("UserName", "Email", "Password") VALUES ($1, $2, $3)';
     const values = [req.body.username, req.body.email, req.body.password];
 
-    db.query(insertQuery, [values], (err, data) => {
-      if (err) return res.status(500).json(err);
-      return res.status(200).json("User has been created.");
-    });
-  });
+    await db.query(insertQuery, values);
+    return res.status(201).json("User has been created.");
+  } catch (error) {
+    console.error("Error during registration:", error);
+    return res.status(500).json({ message: "Failed to register user." });
+  }
 };
 
-export const login = (req, res) => {
-  const selectQuery = 'SELECT * FROM "users" WHERE "users"."Email" = $1';
-  db.query(selectQuery, [req.body.username], (err, result) => {
-    if (err) {
-      return res.status(500).json(err);
-    }
+export const login = async (req, res) => {
+  const { email, password } = req.body;
+  console.log(email);
+  console.log(password);
+
+  try {
+    const query = 'SELECT * FROM users WHERE "Email" = $1';
+    const result = await db.query(query, [email]);
+
     const data = result.rows;
+    console.log(data);
     if (data.length === 0) {
-      return res.status(404).json("User not found!");
+      return res.status(404).json({ message: "User not found!" });
     }
+
     const user = data[0];
     // Check password
-    if (req.body.password !== user.Password) {
-      return res.status(400).json("Wrong username or password!");
+    if (password !== user.Password) {
+      return res.status(400).json({ message: "Wrong username or password!" });
     }
+
     const token = jwt.sign({ id: user.RoleId }, "jwtkey");
-    const { Password, ...userData } = user; // Use destructuring to exclude the "Password" property
+    const { password: _, ...userData } = user; // Use destructuring to exclude the "password" property
+
     res.cookie("access_token", token, {
       httpOnly: true,
     });
+
     res.status(200).json(userData);
-  });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 export const logout = (req, res) => {
@@ -52,63 +70,3 @@ export const logout = (req, res) => {
     .status(200)
     .json("User has been logged out.");
 };
-
-// /////////////////////////////BLOG
-// export const registerBlog = (req, res) => {
-//   //CHECK EXISTING USER
-//   const q = "SELECT * FROM users WHERE email = ? OR username = ?";
-
-//   db.query(q, [req.body.email, req.body.username], (err, data) => {
-//     if (err) return res.status(500).json(err);
-//     if (data.length) return res.status(409).json("User already exists!");
-
-//     //Hash the password and create a user
-//     const salt = bcrypt.genSaltSync(10);
-//     const hash = bcrypt.hashSync(req.body.password, salt);
-
-//     const q = "INSERT INTO users(`username`,`email`,`password`) VALUES (?)";
-//     const values = [req.body.username, req.body.email, hash];
-
-//     db.query(q, [values], (err, data) => {
-//       if (err) return res.status(500).json(err);
-//       return res.status(200).json("User has been created.");
-//     });
-//   });
-// };
-
-// export const loginBlog = (req, res) => {
-//   //CHECK USER
-
-//   const q = "SELECT * FROM users WHERE username = ?";
-
-//   db.query(q, [req.body.username], (err, data) => {
-//     if (err) return res.status(500).json(err);
-//     if (data.length === 0) return res.status(404).json("User not found!");
-
-//     //Check password
-//     const isPasswordCorrect = bcrypt.compareSync(
-//       req.body.password,
-//       data[0].password
-//     );
-
-//     if (!isPasswordCorrect)
-//       return res.status(400).json("Wrong username or password!");
-
-//     const token = jwt.sign({ id: data[0].id }, "jwtkey");
-//     const { password, ...other } = data[0];
-
-//     res
-//       .cookie("access_token", token, {
-//         httpOnly: true,
-//       })
-//       .status(200)
-//       .json(other);
-//   });
-// };
-
-// export const logoutBlog = (req, res) => {
-//   res.clearCookie("access_token",{
-//     sameSite:"none",
-//     secure:true
-//   }).status(200).json("User has been logged out.")
-// };

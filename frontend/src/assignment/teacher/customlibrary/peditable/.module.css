@@ -1,0 +1,20 @@
+.peditable {
+    width: 100%;
+    height: fit-content;
+    justify-content: start;
+    word-break: break-word;
+}
+.textarea {
+    resize: none;
+    outline: none;
+    width: 100%; 
+    height: fit-content;
+    line-height: 19px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: -2px 2px 3px lightgrey;
+    background-color: whitesmoke;
+}
+.peditable > p, .textarea {
+    padding: 0 10px 3px 10px;
+}

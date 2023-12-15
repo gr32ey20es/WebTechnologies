@@ -9,7 +9,7 @@ export const AuthContexProvider = ({ children }) => {
   );
 
   const login = async (inputs) => {
-    const res = await axios.get("http://localhost:4000/api/auth/login", inputs);
+    const res = await axios.post("http://localhost:4000/api/auth/login", inputs);
     setCurrentUser(res.data);
 
     // Thiết lập thời gian tồn tại của phiên đăng nhập là 30 phút (1800000 milliseconds)
