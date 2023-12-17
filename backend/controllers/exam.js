@@ -28,14 +28,18 @@ function separate(data) {
 	});
 	answers = {'answers': answers}
 
-	const questions = data
+	delete data.CourseID;
+
+	const questions = data;
 	return [title || '', questions, answers]
 }
 
 const addExam = (req, res) => {
+	const CourseID = req.body.CourseID;
+
     db.query(
-        'INSERT INTO exams (title, 	questions, answers) VALUES ($1, $2, $3)',
-        separate(req.body.exam),
+        'INSERT INTO exams ("CourseID", title, 	questions, answers) VALUES ($1, $2, $3, $4)',
+        [CourseID, ...separate(req.body)],
         (error, results) => {
         if (error) {
           console.error(error);
@@ -69,12 +73,11 @@ function joinv2(data) {
 
 	exams.title = data.title
 	delete data.title
-
+	console.log(exams);
 	return exams;
 }
 
-const getExam = (req, res) => {
-	console.log(req.params)
+const getExams = (req, res) => {
 	db.query(
 		'SELECT * FROM exams WHERE "CourseID" = $1',
 		[req.params.courseID],
@@ -89,10 +92,23 @@ const getExam = (req, res) => {
 		}
 	);
 }
-
+const getExam = (req, res) => {
+	db.query(
+		'SELECT * FROM exams WHERE "ExamID" = $1',
+		[req.params.examId],
+		(error, results) => {
+			if (error) {
+				console.error(error);
+				res.status(500).send('Lỗi server');
+			} else {
+				res.json(joinv2(results.rows[0]));
+			}
+		}
+	);
+}
 const getEditExam = (req, res) => {
 	db.query(
-		'SELECT ExamID, title, questions, answers FROM exams WHERE ExamID=$1',
+		'SELECT "ExamID", title, questions, answers FROM exams WHERE "ExamID"=$1',
 		[req.params.examId],
 		(error, results) => {
 			if (error) {
@@ -106,9 +122,10 @@ const getEditExam = (req, res) => {
 }
 
 const editExam = (req, res) => {
+	console.log(req.body);
 	db.query(
-		'UPDATE exams SET title=$1, questions=$2, answers=$3 WHERE ExamID=$4',
-		[...separate(req.body.exam) ,req.params.examId],
+		'UPDATE exams SET title=$1, questions=$2, answers=$3 WHERE "ExamID"=$4',
+		[...separate(req.body) ,req.params.examId],
 		(error, results) => {
 			if (error) {
 				console.error(error);
@@ -121,7 +138,7 @@ const editExam = (req, res) => {
 }
 
 const deleteExam = (req, res) => {
-	db.query('DELETE FROM exams WHERE id = $1', [req.params.examId], (error, results) => {
+	db.query('DELETE FROM exams WHERE "ExamID" = $1', [req.params.examId], (error, results) => {
 		if (error) {
 			console.error(error);
 			res.status(500).send('Lỗi server');
@@ -131,4 +148,4 @@ const deleteExam = (req, res) => {
 	});
 }
 
-export { addExam, getAllExam, getExam, getEditExam, editExam, deleteExam }
+export { addExam, getAllExam, getExam, getExams, getEditExam, editExam, deleteExam }

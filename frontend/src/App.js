@@ -14,6 +14,7 @@ import { Login, Register } from "./pages/login_register";
 import HomeBlog from "./Blog/pages/HomeBlog.js";
 import SingleBlog from "./Blog/pages/SingleBlog.js";
 import WriteBlog from "./Blog/pages/WriteBlog.js";
+import Info from "./pages/info/Info.jsx";
 
 const Layout = () => {
   return (
@@ -47,6 +48,7 @@ function App() {
         <Route path="/courses" element={<Course />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/info" element={<Info />} />
         <Route
           path="/dashboard"
           element={<PrivateRouteAdmin element={Dashboard} />}

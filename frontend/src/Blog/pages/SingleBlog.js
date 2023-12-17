@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useContext } from "react";
 import MenuBlog from "./MenuBlog";
-import { AuthContext } from "../../login/context/authContext";
+// import { AuthContext } from "../../login/context/authContext";
 
 const SingleBlog = () => {
   const [post, setPost] = useState([]);
@@ -12,7 +12,7 @@ const SingleBlog = () => {
   const postId = location.pathname.split("/")[3];
   const navigate = useNavigate();
 
-  const { currentUser } = useContext(AuthContext);
+  // const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     // console.log(postId);

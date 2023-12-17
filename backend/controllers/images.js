@@ -1,4 +1,5 @@
 import db from "../db.js";
+
 export const getImagePathByCourseID = async (req,res)=>{
     const  courseID  = req.params.id;
     try{

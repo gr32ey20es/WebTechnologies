@@ -84,7 +84,8 @@ export const editStudentCode = (req, res) => {
                 console.error(error);
                 res.status(500).send("Lỗi server");
               } else {
-                const maxStudentId = results.rows.length > 0 ? results.rows[0].StudentID : 0;
+                const maxStudentId =
+                  results.rows.length > 0 ? results.rows[0].StudentID : 0;
                 const newStudentId = maxStudentId + 1;
                 console.log("newStudentId: ");
                 console.log(newStudentId);
@@ -109,6 +110,75 @@ export const editStudentCode = (req, res) => {
             }
           );
         }
+      }
+    }
+  );
+};
+
+export const getStudentInfo = (req, res) => {
+  const userId = req.params.userId;
+  console.log(userId);
+
+  db.query(
+    'SELECT * FROM students JOIN users ON students."UserId" = users."UserId" WHERE users."UserId" = $1',
+    [parseInt(userId)],
+    (error, results) => {
+      if (error) {
+        res.status(500).send("Server error");
+      } else {
+        if (results.rows.length > 0) {
+          const student = results.rows[0];
+          res.json(student);
+        } else {
+          // Get the maximum StudentsId
+          db.query(
+            'SELECT "StudentID" FROM students ORDER BY "StudentID" DESC LIMIT 1',
+            (error, results) => {
+              if (error) {
+                res.status(500).send("Server error");
+              } else {
+                const maxStudentId =
+                  results.rows.length > 0 ? results.rows[0].StudentID : 0;
+                const newStudentsId = maxStudentId + 1;
+                // Insert into students table with StudentsId as maxId + 1
+                db.query(
+                  'INSERT INTO students ("StudentID", "UserId") VALUES ($1, $2) RETURNING *',
+                  [newStudentsId, parseInt(userId)],
+                  (error, results) => {
+                    if (error) {
+                      res.status(500).send("Server error");
+                    } else {
+                      const student = results.rows[0];
+                      res.json(student);
+                    }
+                  }
+                );
+              }
+            }
+          );
+        }
+      }
+    }
+  );
+};
+export const editStudentInfo = (req, res) => {
+  const { PhoneNumber, Hometown, BirthYear } = req.body;
+  const userId = req.params.userId;
+  console.log(PhoneNumber);
+  console.log(Hometown);
+  console.log(BirthYear);
+
+  // Thực hiện truy vấn hoặc xử lý để sửa thông tin người dùng trong cơ sở dữ liệu
+  // Ví dụ:
+  db.query(
+    'UPDATE students SET "PhoneNumber" = $1, "Address" = $2, "BirthOfDate" = $3 WHERE "UserId" = $4',
+    [PhoneNumber, Hometown,BirthYear, userId],
+    (error, results) => {
+      if (error) {
+        console.error(error);
+        res.status(500).send("Lỗi server");
+      } else {
+        res.send("Thông tin sinh viên đã được cập nhật thành công");
       }
     }
   );
