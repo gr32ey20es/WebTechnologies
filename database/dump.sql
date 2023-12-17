@@ -8,7 +8,6 @@ CREATE TABLE "public"."courses" (
     CONSTRAINT "courses_CourseID" PRIMARY KEY ("CourseID")
 ) WITH (oids = false);
 
-TRUNCATE "courses";
 INSERT INTO "courses" ("CourseID", "CourseName", "CourseDescription") VALUES
 ('it4090',	'An ninh mạng',	'Khóa học an ninh mạng'),
 ('it4411',	'Cấu trúc dữ liệu và giải thuật',	'Khóa học cấu trúc dữ liệu và giải thuật'),
@@ -60,12 +59,11 @@ CREATE TABLE "public"."enrollments" (
     CONSTRAINT "enrollments_EnrollmentID" PRIMARY KEY ("EnrollmentID")
 ) WITH (oids = false);
 
-TRUNCATE "enrollments";
 
 DROP TABLE IF EXISTS "exams";
 DROP SEQUENCE IF EXISTS exams_id_seq;
-CREATE SEQUENCE exams_id_seq INCREMENT 1 MINVALUE 2 MAXVALUE 2147483647 CACHE 1;
 
+CREATE SEQUENCE exams_id_seq INCREMENT 1 MINVALUE 2 MAXVALUE 2147483647 CACHE 1;
 CREATE TABLE "public"."exams" (
     "ExamID" integer DEFAULT nextval('exams_id_seq') NOT NULL,
     "CourseID" character varying(45) NOT NULL,
@@ -75,20 +73,22 @@ CREATE TABLE "public"."exams" (
     CONSTRAINT "exams_ExamID" PRIMARY KEY ("ExamID")
 ) WITH (oids = false);
 
-TRUNCATE "exams";
+
 INSERT INTO "exams" ("ExamID", "CourseID", "title", "questions", "answers") VALUES
-(1,	'it0001',	'Đề thi số 1                            ',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
-(2,	'it0001',	'Đề thi số 2                            ',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
-(3,	'it0001',	'Đề thi số 3                            ',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
-(4,	'it0002',	'Đề thi số 1                            ',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
-(5,	'it0003',	'Đề thi số 1                            ',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
-(6,	'it0004',	'Đề thi số 1                            ',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
-(7,	'it0005',	'Đề thi số 1                            ',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
-(8,	'it0006',	'Đề thi số 1                            ',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
-(9,	'it0007',	'Đề thi số 1                            ',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
-(10,	'it0008',	'Đề thi số 1                            ',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
-(11,	'it0009',	'Đề thi số 1                            ',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
-(12,	'it0010',	'Đề thi số 1                            ',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}');
+(1,	'it0001',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(2,	'it0001',	'Đề thi số 2',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(3,	'it0001',	'Đề thi số 3',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(4,	'it0002',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(5,	'it0003',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(6,	'it0004',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(7,	'it0005',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(8,	'it0006',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(9,	'it0007',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(10,	'it0008',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(11,	'it0009',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}'),
+(12,	'it0010',	'Đề thi số 1',	'{"timeLimit":0,"questions":[{"type":"radio","question":"1","options":["1","1"]},{"type":"checkbox","question":"2","options":["2","2"]}]}',	'{"answers":[[0],[0,1]]}');
+
+SELECT setval('exams_id_seq', (SELECT MAX("ExamID") FROM exams));
 
 DROP TABLE IF EXISTS "image_courses";
 CREATE TABLE "public"."image_courses" (
@@ -97,7 +97,6 @@ CREATE TABLE "public"."image_courses" (
     CONSTRAINT "image_courses_ImagePath" PRIMARY KEY ("ImagePath")
 ) WITH (oids = false);
 
-TRUNCATE "image_courses";
 INSERT INTO "image_courses" ("ImagePath", "CourseID") VALUES
 ('https://drive.google.com/uc?export=view&id=1MUQ13rI8w213RTlLiRYvcjf6PLIedZXy',	'it0001'),
 ('https://drive.google.com/uc?export=view&id=11aoEBUFPmaeOzF4NPOZfsYlEtmmFKU8Q',	'it0004'),
@@ -117,7 +116,6 @@ CREATE TABLE "public"."roles" (
     CONSTRAINT "roles_pkey" PRIMARY KEY ("RoleId")
 ) WITH (oids = false);
 
-TRUNCATE "roles";
 INSERT INTO "roles" ("RoleId", "Role") VALUES
 (1,	'admin'),
 (2,	'student'),
@@ -128,20 +126,21 @@ CREATE TABLE "public"."students" (
     "StudentID" integer NOT NULL,
     "UserId" integer NOT NULL,
     "StudentCode" integer NOT NULL,
-    "BirthOfDate" date,
-    "Address" character varying(255),
-    "PhoneNumber" character varying(12),
     CONSTRAINT "students_StudentID" PRIMARY KEY ("StudentID")
 ) WITH (oids = false);
 
-TRUNCATE "students";
-INSERT INTO "students" ("StudentID", "UserId", "StudentCode", "BirthOfDate", "Address", "PhoneNumber") VALUES
-(1,	1,	20173224,	'2003-12-15',	'Hà Nội',	'0123456789'),
-(2,	2,	20171234,	'2002-09-06',	'Hà Nội',	'0987654322');
+INSERT INTO "students" ("StudentID", "UserId", "StudentCode") VALUES
+(1,	1,	20173224),
+(2,	2,	20171234);
 
 DROP TABLE IF EXISTS "users";
 DROP SEQUENCE IF EXISTS "users_UserId_seq";
-CREATE SEQUENCE "users_UserId_seq" INCREMENT  MINVALUE  MAXVALUE  CACHE ;
+CREATE SEQUENCE "users_UserId_seq" AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
 CREATE TABLE "public"."users" (
     "UserId" integer DEFAULT nextval('"users_UserId_seq"') NOT NULL,
@@ -152,11 +151,26 @@ CREATE TABLE "public"."users" (
     CONSTRAINT "users_pkey" PRIMARY KEY ("UserId")
 ) WITH (oids = false);
 
-TRUNCATE "users";
 INSERT INTO "users" ("UserId", "Email", "Password", "RoleId", "UserName") VALUES
 (1,	'email1@example.com',	'password1',	1,	'Lam'),
 (2,	'email2@example.com',	'password2',	2,	'Kim'),
 (3,	'email3@example.com',	'password3',	3,	'Tan');
+
+DROP TABLE IF EXISTS "posts";
+CREATE TABLE "public"."posts" (
+    "Id" integer,
+    "Email" character varying(45),
+    "title" character varying(450),
+    "desc" character varying(5000),
+    "img" character varying(450),
+    "cat" character varying(450),
+    "date" date,
+    "uid" integer,
+    CONSTRAINT "posts_Id" PRIMARY KEY ("Id")
+) WITH (oids = false);
+TRUNCATE "posts";
+INSERT INTO "posts" ("Id", "Email", "title", "desc", "img", "cat", "date", "uid") VALUES
+(1, 'email1@example.com', 'title 1', 'Hello World 1', 'https://images.shiksha.com/mediadata/ugcDocuments/images/wordpressImages/2022_08_MicrosoftTeams-image-13-2-1.jpg', 'ART', '2002-09-06', 1);
 
 ALTER TABLE ONLY "public"."enrollments" ADD CONSTRAINT "enrollments_CourseID_fkey" FOREIGN KEY ("CourseID") REFERENCES courses("CourseID") NOT DEFERRABLE;
 ALTER TABLE ONLY "public"."enrollments" ADD CONSTRAINT "enrollments_StudentID_fkey" FOREIGN KEY ("StudentID") REFERENCES students("StudentID") NOT DEFERRABLE;
@@ -169,4 +183,6 @@ ALTER TABLE ONLY "public"."students" ADD CONSTRAINT "students_UserID_fkey" FOREI
 
 ALTER TABLE ONLY "public"."users" ADD CONSTRAINT "roleId" FOREIGN KEY ("RoleId") REFERENCES roles("RoleId") NOT DEFERRABLE;
 
--- 2023-12-15 13:16:05.476583+00
+ALTER TABLE ONLY "public"."posts" ADD CONSTRAINT "posts_Id_fkey" FOREIGN KEY ("Id") REFERENCES users("UserId") NOT DEFERRABLE;
+
+-- 2023-12-13 19:40:21.007224+00

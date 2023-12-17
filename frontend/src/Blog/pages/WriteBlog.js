@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 // import "frontend/node_modules/react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-// import ReactQuill from "react-quill.js";
+// import ReactQuill from "react-quill";
 // import "react-quill/dist/quill.snow.css";
 
 const WriteBlog = () => {
@@ -117,12 +117,6 @@ const WriteBlog = () => {
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}
               />
-              {/* <ReactQuill
-                theme="snow"
-                value={value}
-                onChange={setValue}
-                style={{ height: "400px" }}
-              /> */}
             </div>
           </div>
           <div className="col-md-4">
