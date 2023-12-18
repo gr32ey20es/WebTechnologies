@@ -55,15 +55,9 @@ const HomeBlog = () => {
       <div className="container">
         <div className="nav-scroller py-1 mb-3 border-bottom">
           <nav className="nav nav-underline justify-content-between">
-            <a className="nav-item nav-link link-body-emphasis active" href="#">ALL</a>
-            <a className="nav-item nav-link link-body-emphasis" href="#">SECURITY</a>
-            <a className="nav-item nav-link link-body-emphasis" href="#">DATA</a>
-            <a className="nav-item nav-link link-body-emphasis" href="#">AWS</a>
-            <a className="nav-item nav-link link-body-emphasis" href="#">SOFTWARE</a>
-            <a className="nav-item nav-link link-body-emphasis" href="#">DESIGN</a>
-            <a className="nav-item nav-link link-body-emphasis" href="#">HARDWARE</a>
+            
             <Link to={`/blog/write`}>
-              <button className="btn btn-success">Write</button>
+              <button className="btn btn-success">Viết bài</button>
             </Link>
           </nav>
         </div>
