@@ -21,8 +21,8 @@ app.use("/api/studentcourses",studentCoursesRoute);
 app.use("/api/images",imagesRoute);
 app.use("/api/exams", examRoutes);
 app.use("/api/students", studentRoutes);
-app.use("/api/enrollments", enrollmentsRoutes);
-app.use("/api/scores", scoresRoutes);
+// app.use("/api/enrollments", enrollmentsRoutes);
+// app.use("/api/scores", scoresRoutes);
 app.use("/api/postBlog", postBlogRoutes);
 app.get('*', (req, res) => res.send('404 NOT FOUND!!!'))
 

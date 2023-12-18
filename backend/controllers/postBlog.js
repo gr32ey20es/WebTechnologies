@@ -1,5 +1,4 @@
-import { db } from "../db.js";
-import jwt from "jsonwebtoken";
+import db from "../db.js";
 
 export const getPosts = (req, res) => {
   const q = "SELECT * FROM posts";
