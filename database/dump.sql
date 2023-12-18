@@ -192,6 +192,6 @@ ALTER TABLE ONLY "public"."students" ADD CONSTRAINT "students_UserID_fkey" FOREI
 
 ALTER TABLE ONLY "public"."users" ADD CONSTRAINT "roleId" FOREIGN KEY ("RoleId") REFERENCES roles("RoleId") NOT DEFERRABLE;
 
-ALTER TABLE ONLY "public"."posts" ADD CONSTRAINT "posts_Id_fkey" FOREIGN KEY ("Id") REFERENCES users("UserId") NOT DEFERRABLE;
+ALTER TABLE ONLY "public"."posts" ADD CONSTRAINT "posts_Id_fkey" FOREIGN KEY ("uid") REFERENCES users("UserId") NOT DEFERRABLE;
 
 -- 2023-12-13 19:40:21.007224+00
