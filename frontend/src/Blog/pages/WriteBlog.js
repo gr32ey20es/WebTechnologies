@@ -224,26 +224,26 @@ const WriteBlog = () => {
               <div className="container">
                 <div className="row">
                   <div className="col-md-4">
-                    <label style={{ marginRight: "20px" }} htmlFor="art">
-                      ART
+                    <label style={{ marginRight: "20px" }} htmlFor="security">
+                      SECURITY
                     </label>
                     <label
                       style={{ display: "inline-block", marginRight: "20px" }}
-                      htmlFor="science"
+                      htmlFor="data"
                     >
-                      SCIENCE
+                      DATA
                     </label>
                     <label
                       style={{ display: "inline-block", marginRight: "20px" }}
-                      htmlFor="technology"
+                      htmlFor="aws"
                     >
-                      TECHNOLOGY
+                      AWS
                     </label>
                     <label
                       style={{ display: "inline-block", marginRight: "20px" }}
-                      htmlFor="cinema"
+                      htmlFor="software"
                     >
-                      CINEMA
+                      SOFTWARE
                     </label>
                     <label
                       style={{ display: "inline-block", marginRight: "20px" }}
@@ -251,57 +251,57 @@ const WriteBlog = () => {
                     >
                       DESIGN
                     </label>
-                    <label style={{ marginRight: "20px" }} htmlFor="food">
-                      FOOD
+                    <label style={{ marginRight: "20px" }} htmlFor="hardware">
+                      HARDWARE
                     </label>
                   </div>
                   <div className="col-md-8">
                     <div style={{ height: "27px" }}>
                       <input
                         type="radio"
-                        checked={cat === "art"}
+                        checked={cat === "SECURITY"}
                         name="cat"
-                        value="art"
-                        id="art"
+                        value="SECURITY"
+                        id="security"
                         onChange={(e) => setCat(e.target.value)}
                       />
                     </div>
                     <div style={{ height: "27px" }}>
                       <input
                         type="radio"
-                        checked={cat === "science"}
+                        checked={cat === "DATA"}
                         name="cat"
-                        value="science"
-                        id="science"
+                        value="DATA"
+                        id="data"
                         onChange={(e) => setCat(e.target.value)}
                       />
                     </div>
                     <div style={{ height: "27px" }}>
                       <input
                         type="radio"
-                        checked={cat === "technology"}
+                        checked={cat === "AWS"}
                         name="cat"
-                        value="technology"
-                        id="technology"
+                        value="AWS"
+                        id="aws"
                         onChange={(e) => setCat(e.target.value)}
                       />
                     </div>
                     <div style={{ height: "27px" }}>
                       <input
                         type="radio"
-                        checked={cat === "cinema"}
+                        checked={cat === "SOFTWARE"}
                         name="cat"
-                        value="cinema"
-                        id="cinema"
+                        value="SOFTWARE"
+                        id="software"
                         onChange={(e) => setCat(e.target.value)}
                       />
                     </div>
                     <div style={{ height: "27px" }}>
                       <input
                         type="radio"
-                        checked={cat === "design"}
+                        checked={cat === "DESIGN"}
                         name="cat"
-                        value="design"
+                        value="DESIGN"
                         id="design"
                         onChange={(e) => setCat(e.target.value)}
                       />
@@ -309,10 +309,10 @@ const WriteBlog = () => {
                     <div style={{ height: "27px" }}>
                       <input
                         type="radio"
-                        checked={cat === "food"}
+                        checked={cat === "HARDWARE"}
                         name="cat"
-                        value="food"
-                        id="food"
+                        value="HARDWARE"
+                        id="hardware"
                         onChange={(e) => setCat(e.target.value)}
                       />
                     </div>
