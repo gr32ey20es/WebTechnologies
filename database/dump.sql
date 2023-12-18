@@ -157,20 +157,28 @@ INSERT INTO "users" ("UserId", "Email", "Password", "RoleId", "UserName") VALUES
 (3,	'email3@example.com',	'password3',	3,	'Tan');
 
 DROP TABLE IF EXISTS "posts";
+DROP SEQUENCE IF EXISTS "posts_postId_seq";
+CREATE SEQUENCE "posts_postId_seq" AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 CREATE TABLE "public"."posts" (
-    "Id" integer,
+    "Id" integer DEFAULT nextval('"posts_postId_seq"') NOT NULL,
     "Email" character varying(45),
     "title" character varying(450),
     "desc" character varying(5000),
-    "img" character varying(450),
+    "img" character varying(4500),
     "cat" character varying(450),
     "date" date,
     "uid" integer,
     CONSTRAINT "posts_Id" PRIMARY KEY ("Id")
 ) WITH (oids = false);
 TRUNCATE "posts";
-INSERT INTO "posts" ("Id", "Email", "title", "desc", "img", "cat", "date", "uid") VALUES
-(1, 'email1@example.com', 'title 1', 'Hello World 1', 'https://images.shiksha.com/mediadata/ugcDocuments/images/wordpressImages/2022_08_MicrosoftTeams-image-13-2-1.jpg', 'ART', '2002-09-06', 1);
+INSERT INTO "posts" ("Id", "title", "desc", "img", "cat", "date", "uid") VALUES
+(1, 'How to learn Computer Science?', 'Learning computer science involves gaining knowledge and understanding of various fundamental concepts and principles related to computers, algorithms, programming, data structures, and more. Here are some steps you can follow to learn computer science:', 'https://images.shiksha.com/mediadata/ugcDocuments/images/wordpressImages/2022_08_MicrosoftTeams-image-13-2-1.jpg', 'ART', '2002-09-06', 1),
+(2, 'How to be successful in university?', 'IQ (Intelligence Quotient):IQ is a measure of cognitive intelligence and is typically assessed through standardized tests. It focuses ', 'https://images.ctfassets.net/wp1lcwdav1p1/1UWiwsChrQmuf8KfrGlp6J/9271b7dc6953a402fd355476d3b9e2c2/GettyImages-1170998900.jpg?w=1500&h=680&q=60&fit=fill&f=faces&fm=jpg&fl=progressive', 'SCIENCE', '2020-01-01', 2);
 
 ALTER TABLE ONLY "public"."enrollments" ADD CONSTRAINT "enrollments_CourseID_fkey" FOREIGN KEY ("CourseID") REFERENCES courses("CourseID") NOT DEFERRABLE;
 ALTER TABLE ONLY "public"."enrollments" ADD CONSTRAINT "enrollments_StudentID_fkey" FOREIGN KEY ("StudentID") REFERENCES students("StudentID") NOT DEFERRABLE;
