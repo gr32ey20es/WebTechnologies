@@ -138,17 +138,21 @@ INSERT INTO "roles" ("RoleId", "Role") VALUES
 
 ---------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS "students";
+DROP SEQUENCE IF EXISTS "students_StudentID_seq";
+CREATE SEQUENCE "students_StudentID_seq" INCREMENT 1 MINVALUE 2 MAXVALUE 2147483647 CACHE 1;
 CREATE TABLE "public"."students" (
     "StudentID" integer NOT NULL,
     "UserId" integer NOT NULL,
-    "StudentCode" integer NOT NULL,
+    "StudentCode" integer,
+    "BirthOfDate" date,
+    "Address" character varying(255),
+    "PhoneNumber" character varying(12),
     CONSTRAINT "students_StudentID" PRIMARY KEY ("StudentID")
 ) WITH (oids = false);
 
 INSERT INTO "students" ("StudentID", "UserId", "StudentCode") VALUES
-(1,	4,	20173224),
-(2,	5,	20171234);
-
+(1,	1,	20173224),
+(2,	2,	20171234);
 
 --------------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS "users";
