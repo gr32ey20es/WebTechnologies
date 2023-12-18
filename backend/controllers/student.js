@@ -1,6 +1,21 @@
 import db from "../db.js";
 import jwt from "jsonwebtoken";
 
+export const getAllStudents = (req, res) => {
+  db.query(
+    'SELECT * FROM students',
+    [],
+    (error, results) => {
+      if (error) {
+        res.status(500).send("Lỗi server");
+      } else {
+        const student = results.rows;
+        res.json(student);
+      }
+    }
+  );
+};
+
 // Lấy thông tin của một người dùng bằng ID
 export const getStudentCode = (req, res) => {
   const userId = req.params.userId;
@@ -21,6 +36,7 @@ export const getStudentCode = (req, res) => {
     }
   );
 };
+
 
 export const addStudentCode = (req, res) => {
   const { studentCode } = req.body;
@@ -84,8 +100,7 @@ export const editStudentCode = (req, res) => {
                 console.error(error);
                 res.status(500).send("Lỗi server");
               } else {
-                const maxStudentId =
-                  results.rows.length > 0 ? results.rows[0].StudentID : 0;
+                const maxStudentId = results.rows.length > 0 ? results.rows[0].StudentID : 0;
                 const newStudentId = maxStudentId + 1;
                 console.log("newStudentId: ");
                 console.log(newStudentId);

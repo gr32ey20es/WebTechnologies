@@ -88,14 +88,22 @@ const Navbar = () => {
               <div className="right"></div>
             </div>
             
-            {currentUser?.RoleId === 1 ? 
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/dashboard" exact="true">
-                <i 
-                className="fas fa-tachometer-alt">
-                </i>Dashboard
-              </NavLink>
-            </li> 
+            {currentUser?
+              currentUser.RoleId === 1 ? 
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/dashboard" exact="true">
+                  <i 
+                  className="fas fa-tachometer-alt">
+                  </i>Dashboard
+                </NavLink>
+              </li> 
+            : <li className="nav-item">
+                <NavLink className="nav-link" to="/mycourses" exact="true">
+                  <i 
+                  className="fas fa-tachometer-alt">
+                  </i>My Courses
+                </NavLink>
+              </li>
             : null}
 
             <li className="nav-item active" ref={coursesRef}>

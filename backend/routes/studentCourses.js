@@ -1,9 +1,9 @@
 import express from "express";
 import {
-  getAllCoursesByStudentID
-} from "../controllers/studentCourses.js"
+  getAllCoursesByUserID
+} from "../controllers/userCourses.js"
 
 const router = express.Router();
 
-router.get("/:id", getAllCoursesByStudentID);
+router.get("/:id", getAllCoursesByUserID);
 export default router;

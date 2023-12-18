@@ -1,6 +1,7 @@
-import Tilt from "react-parallax-tilt";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useContext, useState } from "react";
+import Tilt from "react-parallax-tilt";
+
 import { AuthContext } from "../../context/authContext";
 
 import './dependencies/fonts/font-awesome-4.7.0/css/font-awesome.min.css';
@@ -14,33 +15,34 @@ const Login = () => {
 	const [inputs, setInputs] = useState({
 		email: "",
 		password: "",
-  });
-  const [, setError] = useState(null);
-  const { login } = useContext(AuthContext);
+	});
+	const [, setError] = useState(null);
+	const { login } = useContext(AuthContext);
 
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
-  const handleChange = (e) => {
+	const handleChange = (e) => {
 		setInputs((prevInputs) => ({
-		  ...prevInputs,
-		  [e.target.name]: e.target.value,
+		...prevInputs,
+		[e.target.name]: e.target.value,
 		}));
-  };
-	
-  const handleSubmit = async (e) => {
+	};
+  
+
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-	
+
 		if (!inputs.email || !inputs.password) {
-		  setError("Vui lòng nhập tên người dùng và mật khẩu");
-		  return;
+			setError("Vui lòng nhập tên người dùng và mật khẩu");
+			return;
 		}
 		try {
-		  await login(inputs);
-		  navigate("/courses");
+			await login(inputs);
+			navigate("/courses");
 		} catch (err) {
-		  setError("Đã xảy ra lỗi khi đăng nhập");
+			setError("Đã xảy ra lỗi khi đăng nhập");
 		}
-  };
+	};
 
   	return(
 		<div className="limiter">
