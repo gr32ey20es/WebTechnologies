@@ -151,8 +151,8 @@ CREATE TABLE "public"."students" (
 ) WITH (oids = false);
 
 INSERT INTO "students" ("StudentID", "UserId", "StudentCode") VALUES
-(1,	1,	20173224),
-(2,	2,	20171234);
+(1,	4,	20173224),
+(2,	5,	20171234);
 
 --------------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS "users";
