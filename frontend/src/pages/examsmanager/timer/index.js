@@ -50,7 +50,7 @@ function Timer () {
         !date ? <></> :
         <div className={styles.timer}>
             { !isEditing  ? 
-            <p onClick={handleClick} style={{padding: '1px 0'}}>
+            <p onClick={handleClick} style={{padding: '1px 0', marginBottom: 0}}>
                 {date.dd !== null ? <>{numberConverter(date.dd)} : </> : <></>}
                 {date.hh !== null ? <>{numberConverter(date.hh)} : </> : <></>}
                 {numberConverter(date.mm)} : {numberConverter(date.ss)} 

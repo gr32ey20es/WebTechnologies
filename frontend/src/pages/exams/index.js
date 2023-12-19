@@ -43,25 +43,25 @@ function Exams({examData}) {
 
     function UI() {
         return !listExams ? <></> :
-        <motion.div className={"center column "+styles.listExams} variants={listVariants}>
-            <div className={"center " + styles.table_header}>
-                <div className="center" style={{width:'75%'}} >Title</div>
-                <div className="center" style={{width:'25%'}} >Status</div>
+        <motion.div className={"kimcenter kimcolumn "+styles.listExams} variants={listVariants}>
+            <div className={"kimcenter " + styles.table_header}>
+                <div className="kimcenter" style={{width:'75%'}} >Title</div>
+                <div className="kimcenter" style={{width:'25%'}} >Status</div>
             </div>
             { listExams.map((exam, index) => 
-            <div key={index} className={"center " + styles.exam}>
+            <div key={index} className={"kimcenter " + styles.exam}>
                 <div className={styles.title}>
                     <strong>{index + 1}.</strong> &nbsp;
                     {exam.title}
                 </div>
-                <div className={"center " + styles.operator}>
+                <div className={"kimcenter " + styles.operator}>
                 {checkExist(exam.ExamID, currentUser.UserId) ? <p>{checkExist(exam.ExamID, currentUser.UserId)} / {exam.questions.questions.length} </p> :
-                    <img className='pointer' alt={exam.ExamID} src={Play}
+                    <img className='kimpointer' alt={exam.ExamID} src={Play}
                     onClick={(e)=>{navigate('/exam/' + e.target.alt);}} />}
                 </div>
             </div>
             )}
-            <div className={'pointer '+styles.buttonCreate}></div>
+            <div className={'kimpointer '+styles.buttonCreate}></div>
         </motion.div>
     }
 

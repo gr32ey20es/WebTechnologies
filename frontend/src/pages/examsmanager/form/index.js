@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import Question from "../question"
 import { useExam } from "../provider"
-import { setUserCurrentBox } from '../provider/actions'
+import { setUserCurrentBox, setExamData } from '../provider/actions'
 import '../customlibrary/basic.css'
 import styles from './.module.css'
 import Circle from '../img/circle.png'
@@ -24,8 +24,30 @@ function Form ({ setIsRefreshParent }) {
         setIsRefreshParent(prev => !prev)
     }
     
+    function checkFully() {
+        const {title, timeLimit, questions} = state.exam;
+
+        if(!title) return 'Title is empty! Do you want to continue ?';
+        if(!timeLimit) return 'Time limit is empty! Do you want to continue ?';
+
+        for(let i=0; i<questions.length; i++) {
+            var {answers, options, question } = questions[i];
+
+            if(!question) return 'Question is empty! Do you want to continue ?';
+            if(!answers.length) return 'Answer is empty! Do you want to continue ?';
+            console.log(answers)
+            for(let j=0; j<options.length; j++)
+                if(!options[j]) return 'Option is empty! Do you want to continue ?';
+        }
+
+        return 'Submit?'
+    } 
+
     const handleFormSubmit = (e) => {
         e.preventDefault()
+        let results = window.confirm(checkFully());
+        if(!results) return false;
+
         const data = {...state.exam, CourseID: parseInt(courseId)}
         const postExam = async () => {
             await axios.post('http://localhost:4000/api/exams', data, 
@@ -38,6 +60,7 @@ function Form ({ setIsRefreshParent }) {
         if (parseInt(examId) === 0) postExam()
         else putExam()
 
+        dispatch(setExamData(null))
         navigate('/mycourses')
     }
     
@@ -59,18 +82,18 @@ function Form ({ setIsRefreshParent }) {
             onSubmit={handleFormSubmit}
         >{QuestionBoxs()}
         </form>
-        <footer className={"center "+styles.footer}>
+        <footer className={"kimcenter "+styles.footer}>
             <div>
                 <img src={Circle} alt="" width='37px' className={styles.logo}/>
             </div>
             <div className={styles.shift}>
-                <button disabled={currentBox < 1} className='pointer'
+                <button disabled={currentBox < 1} className='kimpointer'
                     value="prev" onClick={handleShift}>Prev</button>
-                <button disabled={currentBox >= lenQuestions - 5} className='pointer'
+                <button disabled={currentBox >= lenQuestions - 5} className='kimpointer'
                     value="next" onClick={handleShift}>Next</button>
             </div>
             <div>
-                <button className='pointer' form="userForm" type="submit">Submit</button>
+                <button className='kimpointer' form="userForm" type="submit">Submit</button>
             </div>
         </footer>
     </>

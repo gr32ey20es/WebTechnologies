@@ -27,9 +27,23 @@ function Form ({ setIsRefreshParent }) {
         setIsRefreshParent(prev => !prev)
     }
 
+    function checkFully() {
+        const answers = state.user.answers;
+        const length = state.exam.questions.length;
+
+        for(let i=0; i<length; i++) 
+            if(!answers[i] || !answers[i].length)
+                return 'Answer is empty! Do you want to continue ?';
+
+        return 'Submit?'
+    } 
+
     const handleFormSubmit = (e) => {
         e.preventDefault()
         
+        let results = window.confirm(checkFully());
+        if(!results) return false;
+
         axios.post('http://localhost:4000/api/scores', {answers: state.user.answers, UserId: currentUser.UserId, ExamID: parseInt(examId)}, 
         { headers: { 'Content-Type': 'application/json' }})
 
@@ -55,18 +69,18 @@ function Form ({ setIsRefreshParent }) {
             onSubmit={handleFormSubmit}
         >{QuestionBoxs()}
         </form>
-        <footer className={"center "+styles.footer}>
+        <footer className={"kimcenter "+styles.footer}>
             <div>
                 <img src={Circle} alt="" width='37px' className={styles.logo}/>
             </div>
             <div className={styles.shift}>
-                <button disabled={currentBox < 1} className='pointer'
+                <button disabled={currentBox < 1} className='kimpointer'
                     value="prev" onClick={handleShift}>Prev</button>
-                <button disabled={currentBox >= lenQuestions - 5} className='pointer'
+                <button disabled={currentBox >= lenQuestions - 5} className='kimpointer'
                     value="next" onClick={handleShift}>Next</button>
             </div>
             <div>
-                <button className='pointer' form="userForm" type="submit">Submit</button>
+                <button className='kimpointer' form="userForm" type="submit">Submit</button>
             </div>
         </footer>
     </>

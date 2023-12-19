@@ -25,7 +25,7 @@ function Aside ({ setIsRefreshParent }) {
                 'whitesmoke 49%, lightgrey 50%)' : 'whitesmoke 49%, whitesmoke 50%)'
 
             linkBoxs.push(
-                <label key={i} className={"center "+styles.linkBox} style={{background}}>
+                <label key={i} className={"kimcenter "+styles.linkBox} style={{background}}>
                     <a  value={i}
                         href={"#question"+i} 
                         onClick={handleAClick}
@@ -38,15 +38,15 @@ function Aside ({ setIsRefreshParent }) {
     }
 
     return (
-        <aside className={"center column " + styles.aside}>
+        <aside className={"kimcenter kimcolumn " + styles.aside}>
             <div className={styles.peditable}>
                 <p fontSize={17}>{state.exam.title} </p>
             </div>
-            <div className={"center column " + styles.informations}>
+            <div className={"kimcenter kimcolumn " + styles.informations}>
                 <div className={styles.timer}>
                     <Timer/>
                 </div>
-                <div className={"center "+styles.linkBoxs}>
+                <div className={"kimcenter "+styles.linkBoxs}>
                     {LinkBoxs()}
                 </div>
             </div>

@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 // import "frontend/node_modules/react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+// import ReactQuill from "react-quill";
+// import "react-quill/dist/quill.snow.css";
 
 const WriteBlog = () => {
   const state = useLocation().state;
@@ -39,7 +39,7 @@ const WriteBlog = () => {
 
   const handleExist = () => {
     navigate("/blog/homepage");
-  };
+  }
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -74,10 +74,7 @@ const WriteBlog = () => {
     <>
       <div className="container">
         <h1 className="fst-italic">Viết bài</h1>
-        <div
-          className="row"
-          style={{ marginTop: "20px", borderRadius: "1px solid black" }}
-        >
+        <div className="row" style={{ marginTop: "20px" }}>
           <div className="col-md-8">
             <div className="container">
               <div className="" style={{ marginBottom: "5px" }}>
@@ -110,36 +107,16 @@ const WriteBlog = () => {
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
-
             <div className="container" style={{ marginTop: "10px" }}>
-              <div>
-                <svg
-                  style={{ marginBottom: "5px" }}
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  class="bi bi-file-text-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1m-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5M5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1m0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1" />
-                </svg>{" "}
-                <h3 style={{ display: "inline-block" }}>Content</h3>
-              </div>
-              <ReactQuill
-                theme="snow"
-                value={value}
-                onChange={setValue}
-                style={{ height: "300px" }}
-              />
-              {/* <input
+              {/* <ReactQuill theme="snow" value={value} onChange={setValue} /> */}
+              <input
                 className="form-control"
                 style={{ width: "100%", height: "200px" }}
                 type="text"
                 placeholder="Content"
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}
-              /> */}
+              />
             </div>
           </div>
           <div className="col-md-4">
@@ -220,104 +197,110 @@ const WriteBlog = () => {
                 </svg>
                 <h3 style={{ display: "inline-block" }}>Category</h3>
               </div>
+              <div>
+                <label
+                  style={{ display: "inline-block", marginRight: "20px" }}
+                  htmlFor="art"
+                >
+                  ART
+                </label>
+                <input
+                  style={{ display: "inline-block" }}
+                  type="radio"
+                  checked={cat === "art"}
+                  name="cat"
+                  value="art"
+                  id="art"
+                  onChange={(e) => setCat(e.target.value)}
+                />
+              </div>
+              <div>
+                <label
+                  style={{ display: "inline-block", marginRight: "20px" }}
+                  htmlFor="science"
+                >
+                  SCIENCE
+                </label>
+                <input
+                  style={{ display: "inline-block", marginRight: "20px" }}
+                  type="radio"
+                  checked={cat === "science"}
+                  name="cat"
+                  value="science"
+                  id="science"
+                  onChange={(e) => setCat(e.target.value)}
+                />
+              </div>
+              <div>
+                <label
+                  style={{ display: "inline-block", marginRight: "20px" }}
+                  htmlFor="technology"
+                >
+                  TECHNOLOGY
+                </label>
+                <input
+                  style={{ display: "inline-block", marginRight: "20px" }}
+                  type="radio"
+                  checked={cat === "technology"}
+                  name="cat"
+                  value="technology"
+                  id="technology"
+                  onChange={(e) => setCat(e.target.value)}
+                />
+              </div>
+              <div>
+                <label
+                  style={{ display: "inline-block", marginRight: "20px" }}
+                  htmlFor="cinema"
+                >
+                  CINEMA
+                </label>
 
-              <div className="container">
-                <div className="row">
-                  <div className="col-md-4">
-                    <label style={{ marginRight: "20px" }} htmlFor="security">
-                      SECURITY
-                    </label>
-                    <label
-                      style={{ display: "inline-block", marginRight: "20px" }}
-                      htmlFor="data"
-                    >
-                      DATA
-                    </label>
-                    <label
-                      style={{ display: "inline-block", marginRight: "20px" }}
-                      htmlFor="aws"
-                    >
-                      AWS
-                    </label>
-                    <label
-                      style={{ display: "inline-block", marginRight: "20px" }}
-                      htmlFor="software"
-                    >
-                      SOFTWARE
-                    </label>
-                    <label
-                      style={{ display: "inline-block", marginRight: "20px" }}
-                      htmlFor="design"
-                    >
-                      DESIGN
-                    </label>
-                    <label style={{ marginRight: "20px" }} htmlFor="hardware">
-                      HARDWARE
-                    </label>
-                  </div>
-                  <div className="col-md-8">
-                    <div style={{ height: "27px" }}>
-                      <input
-                        type="radio"
-                        checked={cat === "SECURITY"}
-                        name="cat"
-                        value="SECURITY"
-                        id="security"
-                        onChange={(e) => setCat(e.target.value)}
-                      />
-                    </div>
-                    <div style={{ height: "27px" }}>
-                      <input
-                        type="radio"
-                        checked={cat === "DATA"}
-                        name="cat"
-                        value="DATA"
-                        id="data"
-                        onChange={(e) => setCat(e.target.value)}
-                      />
-                    </div>
-                    <div style={{ height: "27px" }}>
-                      <input
-                        type="radio"
-                        checked={cat === "AWS"}
-                        name="cat"
-                        value="AWS"
-                        id="aws"
-                        onChange={(e) => setCat(e.target.value)}
-                      />
-                    </div>
-                    <div style={{ height: "27px" }}>
-                      <input
-                        type="radio"
-                        checked={cat === "SOFTWARE"}
-                        name="cat"
-                        value="SOFTWARE"
-                        id="software"
-                        onChange={(e) => setCat(e.target.value)}
-                      />
-                    </div>
-                    <div style={{ height: "27px" }}>
-                      <input
-                        type="radio"
-                        checked={cat === "DESIGN"}
-                        name="cat"
-                        value="DESIGN"
-                        id="design"
-                        onChange={(e) => setCat(e.target.value)}
-                      />
-                    </div>
-                    <div style={{ height: "27px" }}>
-                      <input
-                        type="radio"
-                        checked={cat === "HARDWARE"}
-                        name="cat"
-                        value="HARDWARE"
-                        id="hardware"
-                        onChange={(e) => setCat(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                </div>
+                <input
+                  style={{ display: "inline-block", marginRight: "20px" }}
+                  type="radio"
+                  checked={cat === "cinema"}
+                  name="cat"
+                  value="cinema"
+                  id="cinema"
+                  onChange={(e) => setCat(e.target.value)}
+                />
+              </div>
+              <div>
+                <label
+                  style={{ display: "inline-block", marginRight: "20px" }}
+                  htmlFor="design"
+                >
+                  DESIGN
+                </label>
+
+                <input
+                  style={{ display: "inline-block", marginRight: "20px" }}
+                  type="radio"
+                  checked={cat === "design"}
+                  name="cat"
+                  value="design"
+                  id="design"
+                  onChange={(e) => setCat(e.target.value)}
+                />
+              </div>
+              <div>
+                <label
+                  style={{ display: "inline-block", marginRight: "20px" }}
+                  htmlFor="food"
+                >
+                  FOOD
+                </label>
+
+                <input
+                  style={{ display: "inline-block", marginRight: "20px" }}
+                  type="radio"
+                  checked={cat === "food"}
+                  name="cat"
+                  value="food"
+                  id="food"
+                  onChange={(e) => setCat(e.target.value)}
+                />
               </div>
             </div>
             <div className="item">
@@ -330,7 +313,9 @@ const WriteBlog = () => {
                 >
                   Close
                 </button>
-
+                <button onClick={handleClick} className="btn btn-primary">
+                  Public
+                </button>
                 {/* <!-- Modal --> */}
                 <div
                   className="modal fade"
@@ -339,12 +324,13 @@ const WriteBlog = () => {
                   role="dialog"
                   aria-labelledby="exampleModalLabel"
                   aria-hidden="true"
-                  style={{minHeight: 200, height: 200}}
                 >
                   <div className="modal-dialog" role="document">
                     <div className="modal-content">
                       <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel"></h5>
+                        <h5 className="modal-title" id="exampleModalLabel">
+                          
+                        </h5>
                         <button
                           type="button"
                           className="close"
@@ -363,11 +349,7 @@ const WriteBlog = () => {
                         >
                           Close
                         </button>
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          onClick={handleExist}
-                        >
+                        <button type="button" className="btn btn-primary" onClick={handleExist}>
                           Exist
                         </button>
                       </div>
@@ -376,10 +358,9 @@ const WriteBlog = () => {
                 </div>
 
                 {/* <button>Save as a draft</button> */}
-                <button onClick={handleClick} className="btn btn-primary">
-                  Public
-                </button>
+                
               </div>
+              
             </div>
           </div>
         </div>

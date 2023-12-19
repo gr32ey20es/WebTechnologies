@@ -29,10 +29,10 @@ export default function PEditable ({
     const handleClick = () => setIsEditing(true)
     const handleChange = (e) => setValue(e.target.value)
     const handleKeyDown = (e) => e.keyCode === 13 && handleBlur();
-
+    
 
     return (<>
-        <div className={`center ${styles.peditable}`} >
+        <div className={`kimcenter ${styles.peditable}`} >
             { isEditing  ? 
             <TextareaAutosize 
                 autoFocus
@@ -44,7 +44,7 @@ export default function PEditable ({
                 style={{fontSize}}
                 className={styles.textarea} 
             /> :
-            <p onClick={handleClick} style={{height, fontSize}}>
+            <p onClick={handleClick} style={{height, fontSize, marginBottom:'0'}}>
                 {value ? value : notify}
             </p>
             }

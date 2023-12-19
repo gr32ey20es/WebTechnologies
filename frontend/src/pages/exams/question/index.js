@@ -19,7 +19,7 @@ function Question ({ idQuestion, setIsRefreshParent }) {
                 <p className={styles.indexs} style={{fontSize: 18}}><strong>{idQuestion+1}.</strong></p>
                 <p style={{fontSize: 18}}>&nbsp;{question}</p>
             </div>
-            <div className="center column">
+            <div className="kimcenter kimcolumn">
                 { options.map((_, idOption) =>
                 <Option
                     key={idOption}

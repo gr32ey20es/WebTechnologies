@@ -54,7 +54,16 @@ const reducer = (state, action) => {
         case SET_EXAM_DATA:
             newState = state
             if(action.payload === null) 
-                newState = {...initState}
+                newState = {
+                    user: {
+                        currentBox: null
+                    },
+                    exam: {
+                        title: '',
+                        timeLimit: 0,
+                        questions: [],
+                    }
+                }
             else
                 newState.exam = {
                     ...newState.exam,

@@ -10,7 +10,7 @@ function Exam() {
 
     return(
         <ExamProvider>
-        <div className="center" style={{backgroundColor: '#f8f8ff90'}}>
+        <div className="kimcenter" style={{backgroundColor: '#f8f8ff90'}}>
             <Aside setIsRefreshParent={setIsRefresh}/>
             <Form setIsRefreshParent={setIsRefresh}/>
         </div>

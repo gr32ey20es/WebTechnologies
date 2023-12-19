@@ -55,6 +55,10 @@ function ExamsManager({ courseData, examData }) {
 
       const handleDeleteClick = (e) => {
         e.preventDefault()
+
+        let results = window.confirm("Delete?");
+        if(!results) return false;
+
         const deleteExam = async () => {
             const id = e.target.alt
             try {
@@ -70,6 +74,9 @@ function ExamsManager({ courseData, examData }) {
     }
     
     const handleAdd = () => {
+        let results = window.confirm("Add?");
+        if(!results) return false;
+
         const addStudent = async () => {
             try {
                 const data= {UserId, CourseID: courseData.CourseID}
@@ -109,14 +116,13 @@ function ExamsManager({ courseData, examData }) {
         setData(temp);
     }
 
-    console.log(label)
     function UI() {
         return !listExams ? <></> :
         <motion.div variants={listVariants}>
 
-            <div className="center" style={{width: '100%'}}>
-                <div className="center" style={{border: '1px solid black', borderRadius:'5px', width:'500px', margin: '0 0 20px 0'}}>
-                    <button className={'pointer '+styles.buttonCreate} onClick={handleAdd} >Add</button>
+            <div className="kimcenter" style={{width: '100%'}}>
+                <div className="kimcenter" style={{border: '1px solid black', borderRadius:'5px', width:'500px', margin: '0 0 20px 0'}}>
+                    <button className={'kimpointer '+styles.buttonCreate} onClick={handleAdd} >Add</button>
                     <ReactSearchBox placeholder="Student Code"
                         style={{width: '75%'}}
                         data={listStudents}
@@ -132,25 +138,25 @@ function ExamsManager({ courseData, examData }) {
                 xAxis={[{ data: label, scaleType: 'band' }]}
                 >
                 </BarChart> : null }
-                <div className={"center column "+styles.listExams} variants={listVariants}> 
-                    <div className={"center " + styles.table_header}>
-                        <div className="center" style={{width:'75%'}} >Title</div>
-                        <div className="center" style={{width:'25%'}} >Action</div>
+                <div className={"kimcenter kimcolumn "+styles.listExams} variants={listVariants}> 
+                    <div className={"kimcenter " + styles.table_header}>
+                        <div className="kimcenter" style={{width:'75%'}} >Title</div>
+                        <div className="kimcenter" style={{width:'25%'}} >Action</div>
                     </div>
                     { listExams.map((exam, index) => 
-                    <div key={index} className={"center " + styles.exam}>
+                    <div key={index} className={"kimcenter " + styles.exam}>
                         <div className={styles.title}>
                             <strong>{index + 1}.</strong> &nbsp;
                             {exam.title}
                         </div>
-                        <div className={"center " + styles.operator}>
-                            <img className='pointer' alt={exam.ExamID} name={exam.questions.questions.length} src={Chart} onClick={handleChartClick}/>
-                            <img className='pointer' alt="" src={Edit} onClick={()=>{navigate('/exam/edit/0/' + exam.ExamID)}}/>
-                            <img className='pointer' alt={exam.ExamID} src={Delete} onClick={handleDeleteClick}/>
+                        <div className={"kimcenter " + styles.operator}>
+                            <img className='kimpointer' alt={exam.ExamID} name={exam.questions.questions.length} src={Chart} onClick={handleChartClick}/>
+                            <img className='kimpointer' alt="" src={Edit} onClick={()=>{navigate('/exam/edit/0/' + exam.ExamID)}}/>
+                            <img className='kimpointer' alt={exam.ExamID} src={Delete} onClick={handleDeleteClick}/>
                         </div>
                     </div>
                     )}
-                    <button className={'pointer '+styles.buttonCreate} onClick={()=>{navigate('/exam/edit/' + courseData.CourseID + '/0')}}>Create</button>
+                    <button className={'kimpointer '+styles.buttonCreate} onClick={()=>{navigate('/exam/edit/' + courseData.CourseID + '/0')}}>Create</button>
                 </div>
             </div>
         </motion.div>
@@ -160,16 +166,3 @@ function ExamsManager({ courseData, examData }) {
 }
 
 export default ExamsManager
-
-const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-const xLabels = [
-  'Page A',
-  'Page B',
-  'Page C',
-  'Page D',
-  'Page E',
-  'Page F',
-  'Page G',
-];
-
-const valueFormatter = (value) => `${value}mm`;

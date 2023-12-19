@@ -29,15 +29,15 @@ function Option ({ idOption, idQuestion, setIsRefreshParent }) {
                 onBlur={_setExamOption}
                 />
             </div>
-            <div className={"center " + styles.inputs}>
+            <div className={"kimcenter " + styles.inputs}>
                 <input 
                     type={type}
                     onChange={handleInputChange}
                     className={styles.inputOption}
                     checked={answers.includes(idOption)} />
             </div>
-            <div className={"center " + styles.bins}>
-                <img className='pointer' alt='' src={Delete} onClick={handleImgClick}/>
+            <div className={"kimcenter " + styles.bins}>
+                <img className='kimpointer' alt='' src={Delete} onClick={handleImgClick}/>
             </div>
         </label>
     </>

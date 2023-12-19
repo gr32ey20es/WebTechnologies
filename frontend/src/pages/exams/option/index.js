@@ -18,16 +18,16 @@ function Option ({ idOption, idQuestion, setIsRefreshParent }) {
     return <>
         <label className={styles.options}>
             <div style={{order: 1, width: '100%'}}>
-            <p style={{paddingBottom: '1px'}}>{options[idOption]}</p>
+            <p style={{paddingBottom: '1px', marginBottom: 0}}>{options[idOption]}</p>
             </div>
-            <div className={"center " + styles.inputs}>
+            <div className={"kimcenter " + styles.inputs}>
                 <input 
                     type={type}
                     onChange={handleInputChange}
                     className={styles.inputOption}
                     checked={answer.includes(idOption)} />
             </div>
-            <div className={"center " + styles.bins}>
+            <div className={"kimcenter " + styles.bins}>
             </div>
         </label>
     </>

@@ -42,7 +42,7 @@ function Question ({ idQuestion, setIsRefreshParent }) {
                 fontSize={18}
                 />
             </div>
-            <div className="center column">
+            <div className="kimcenter kimcolumn">
                 { options.map((_, idOption) =>
                 <Option
                     key={idOption}
@@ -53,8 +53,8 @@ function Question ({ idQuestion, setIsRefreshParent }) {
             </div>
             <div className={styles.operator}>
                 <TypeSwitch onChange={handleChangeSwitch} checked={type==='radio'}/>
-                <button onClick={handleAddButton} type="button" className="pointer">Option Add</button>
-                <button onClick={handleDeleteButton} type="button" className="pointer">Delete</button>
+                <button onClick={handleAddButton} type="button" className="kimpointer">Option Add</button>
+                <button onClick={handleDeleteButton} type="button" className="kimpointer">Delete</button>
             </div>
         </div>
     )

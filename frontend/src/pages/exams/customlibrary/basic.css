@@ -1,15 +1,15 @@
-.center {
+.kimcenter {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.column {
+.kimcolumn {
     flex-direction: column;
 }
-.pointer {
+.kimpointer {
     cursor: pointer;
 }
-.pointer:hover {
+.kimpointer:hover {
     border-radius: 6px;
     background-color: #d3d3d370;
 }
