@@ -1,7 +1,7 @@
 .peditable {
     width: 100%;
     height: fit-content;
-    justify-content: start;
+    justify-content: start !important;
     word-break: break-word;
 }
 .textarea {

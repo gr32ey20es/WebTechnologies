@@ -11,7 +11,7 @@ function ExamEdit() {
 
     return(
         <ExamProvider>
-        <div className="center none" style={{backgroundColor: '#f8f8ff90'}}>
+        <div className="kimcenter none" style={{backgroundColor: '#f8f8ff90'}}>
             <Aside setIsRefreshParent={setIsRefresh}/>
             <Form setIsRefreshParent={setIsRefresh}/>
         </div>
